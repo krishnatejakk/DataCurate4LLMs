@@ -1,0 +1,14 @@
+h5py
+torch
+numpy
+datasets
+accelerate
+transformers
+git+https://github.com/decile-team/submodlib.git
+tqdm
+jinja2
+faiss-gpu
+langchain
+python-dotenv
+tenacity
+sentence-transformers

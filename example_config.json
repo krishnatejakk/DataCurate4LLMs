@@ -1,0 +1,13 @@
+{
+    "instruction": "Generate embeddings that capture the core meaning of user-assistant conversations across multiple domains, ensuring generalization and suitability for clustering based on semantic similarity.",
+    "query_description": "Conversation",
+    "templates": {
+      "default": "{{ text }}",
+      "conversation": "{% for conv in conversations %}{{ conv.from }}: {{ conv.value }}\n{% endfor %}",
+      "qa": "Question: {{ question }}\nAnswer: {{ answer }}"
+    },
+    "batch_size": 100000,
+    "num_folds": 10,
+    "subset_sizes": [50, 25, 10, 5, 1],
+    "seed": 42
+  }
