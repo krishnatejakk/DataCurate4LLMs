@@ -118,7 +118,7 @@ python main.py --input_files <file1> <file2> ... --output_dir <output_directory>
 
 ### Configuration File
 
-Create a JSON configuration file (e.g., `config.json`) to specify processing parameters.
+Create a JSON configuration file (e.g., `config.json`) to specify processing parameters. You can find a example configuration file here: **configs/example_config.json**
 
 **Example `config.json`:**
 
