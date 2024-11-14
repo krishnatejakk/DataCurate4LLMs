@@ -1,2 +1,3 @@
-# Data Subset Selection for data analysis and improvement.
-This serves as a central repository containing the subset selection code for the following [GitHub Epic](https://github.ibm.com/conversational-ai/issue-tracker/issues/386)
+# Subset Selection for Language Models
+This repository contains the code to select representative subsets that could be used as replay buffers, fine-tuning language models efficiently, analyzing data redundancy and so on.
+
