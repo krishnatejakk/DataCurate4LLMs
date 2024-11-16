@@ -50,7 +50,7 @@ MODEL_CONFIGS = {
 class UnifiedBGEEncoder:
     def __init__(
         self,
-        model_name: str = 'BAAI/bge-multilingual-gemma2',
+        model_name: str = 'BAAI/bge-m3',
         device: Optional[torch.device] = None,
         batch_size: int = 32,
         use_fp16: bool = True,
