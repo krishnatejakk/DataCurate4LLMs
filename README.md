@@ -106,7 +106,7 @@ The main script is designed to process input data files, generate embeddings, an
 ### Command-Line Arguments
 
 ```bash
-python main.py --input_files <file1> <file2> ... --output_dir <output_directory> --config <config.json> [--num_gpus <n>] [--max_retries <n>] [--retry_delay <seconds>]
+python replay_buffer_selection.py --input_files <file1> <file2> ... --output_dir <output_directory> --config <config.json> [--num_gpus <n>] [--max_retries <n>] [--retry_delay <seconds>]
 ```
 
 - `--input_files`: List of input data files to process.
@@ -209,13 +209,13 @@ Computing pairwise similarities between large sets of embeddings can be memory-i
 ### Processing a Single File
 
 ```bash
-python main.py --input_files data/conversations.jsonl --output_dir output --config config.json
+python replay_buffer_selection.py --input_files data/conversations.jsonl --output_dir output --config config.json
 ```
 
 ### Processing Multiple Files
 
 ```bash
-python main.py --input_files data/dataset1.jsonl data/dataset2.jsonl --output_dir output --config config.json --num_gpus 2
+python replay_buffer_selection.py --input_files data/dataset1.jsonl data/dataset2.jsonl --output_dir output --config config.json --num_gpus 2
 ```
 
 ### Subset Selection for New Use Cases
@@ -241,7 +241,7 @@ Suppose you have a dataset of multi-turn conversations and want to select subset
 **Usage:**
 
 ```bash
-python main.py --input_files data/multi_turn_conversations.jsonl --output_dir output --config conversation_config.json
+python replay_buffer_selection.py --input_files data/multi_turn_conversations.jsonl --output_dir output --config conversation_config.json
 ```
 
 ### Using Compression-Based Similarity
