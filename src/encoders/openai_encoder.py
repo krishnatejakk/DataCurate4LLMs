@@ -34,7 +34,7 @@ class OpenAIEncoder(BaseEncoder):
             print(f"Retryable error embedding texts: {e}")
             raise  # Let tenacity handle retry
 
-    def encode(self, inputs, return_tensors=False, return_numpy=True):
+    def encode(self, inputs, return_tensors=True, return_numpy=False, **kwargs):
         embeddings = []
         for i in tqdm(range(0, len(inputs), self.batch_size)):
             batch = inputs[i:i + self.batch_size]

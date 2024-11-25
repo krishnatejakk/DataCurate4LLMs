@@ -13,46 +13,51 @@ MODEL_CONFIGS = {
         'pooling_method': 'cls',
         'normalize_embeddings': True,
         'max_length': 512,
-        'default_instruction': 'Represent this sentence for searching relevant passages:' 
+        'default_instruction': 'Represent this sentence for searching relevant passages:' ,
+        'batch_size': 256,
     },
     'BAAI/bge-base-en-v1.5': {
         'pooling_method': 'cls',
         'normalize_embeddings': True,
         'max_length': 512,
-        'default_instruction': 'Represent this sentence for searching relevant passages:'
+        'default_instruction': 'Represent this sentence for searching relevant passages:',
+        'batch_size': 256,
     },
     'BAAI/bge-large-en': {
         'pooling_method': 'cls',
         'normalize_embeddings': True,
         'max_length': 512,
-        'default_instruction': 'Represent this sentence for searching relevant passages:'
+        'default_instruction': 'Represent this sentence for searching relevant passages:',
+        'batch_size': 256,
     },
     'BAAI/bge-large-en-v1.5': {
         'pooling_method': 'cls',
         'normalize_embeddings': True,
         'max_length': 512,
-        'default_instruction': 'Represent this sentence for searching relevant passages:'
+        'default_instruction': 'Represent this sentence for searching relevant passages:',
+        'batch_size': 256,
     },
     'BAAI/bge-m3': {
         'pooling_method': 'cls',
         'normalize_embeddings': True,
         'max_length': 4096,
-        'default_instruction': 'Use the following sentences to search for relevant passages:'
+        'default_instruction': 'Use the following sentences to search for relevant passages:',
+        'batch_size': 32,
     },
     'BAAI/bge-multilingual-gemma2': {
         'pooling_method': 'last_token',
         'normalize_embeddings': True,
         'max_length': 4096,
-        'default_instruction': 'Represent this for searching:'
+        'default_instruction': 'Represent this for searching:',
+        'batch_size': 20,
     }
 }
 
 class UnifiedBGEEncoder:
     def __init__(
         self,
-        model_name: str = 'BAAI/bge-multilingual-gemma2',
+        model_name: str = 'BAAI/bge-m3',
         device: Optional[torch.device] = None,
-        batch_size: int = 32,
         use_fp16: bool = True,
         use_default_instruction: bool = True
     ):
@@ -79,6 +84,7 @@ class UnifiedBGEEncoder:
         
         # Set up GPU configuration
         self.num_gpus = torch.cuda.device_count()
+        batch_size = self.config['batch_size']
         self.batch_size = batch_size * self.num_gpus if self.num_gpus > 0 else batch_size
         
         # Suppress tokenizer warnings

@@ -1,4 +1,5 @@
 import os
+import math
 import logging
 import h5py
 import torch
@@ -6,10 +7,11 @@ import numpy as np
 import gc
 import glob
 import argparse
-from datasets import load_dataset
+from datasets import load_dataset, concatenate_datasets
 from dataclasses import dataclass
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional, Union
 from src.encoders.bge_unified_encoder import UnifiedBGEEncoder
+from src.encoders.openai_encoder import OpenAIEncoder
 from submodlib import FacilityLocationFunction
 from multiprocessing import Pool, set_start_method
 from src.utils.compute_pairwise_similarity import compute_pairwise_dense
@@ -20,32 +22,32 @@ import re
 import time
 from functools import wraps
 
-# Configure logging to display timestamp, module name, log level, and message
+# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 )
 logger = logging.getLogger(__name__)
 
-# Mapping from subset sizes to descriptive names
-SIZE_TO_REPLAY_DESC = {1: "tiny", 5: "small", 10: "medium", 25: "large", 50: "verylarge"}
-
 @dataclass
 class ProcessingConfig:
     """
-    Configuration for data processing.
+    Enhanced configuration for data processing.
     """
     instruction: str
     query_description: str
     templates: Dict[str, str]
     batch_size: int = 100000
     num_folds: int = 1
-    subset_sizes: List[int] = None
+    subset_sizes: List[Union[int, float]] = None  # Can be percentages or absolute numbers
     num_gpus: int = 8
     seed: int = 42
     max_retries: int = 3
     retry_delay: int = 30
-    output_dir: str = 'output'  # Output directory for saving results
+    output_dir: str = 'output'
+    template_name: str = 'conversation'
+    combine_files: bool = False  # New parameter to control file combination
+    encoder_type: str = 'bge'
 
 def retry_on_exception(func):
     """
@@ -70,7 +72,7 @@ def retry_on_exception(func):
 
 class DataProcessor:
     """
-    Processes data by generating embeddings and selecting subsets based on embeddings.
+    Enhanced data processor with support for combined files and multiple selection methods.
     """
     def __init__(self, config: ProcessingConfig, encoder_cls):
         """
@@ -83,11 +85,10 @@ class DataProcessor:
         self.config = config
         self.encoder = encoder_cls()
         self.env = Environment(loader=BaseLoader())
-        # Compile templates for text formatting
         self.templates = {k: self.env.from_string(v) for k, v in config.templates.items()}
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
-        # Set random seeds for reproducibility
+        # Set random seeds
         np.random.seed(config.seed)
         torch.manual_seed(config.seed)
         if torch.cuda.is_available():
@@ -109,6 +110,70 @@ class DataProcessor:
             raise ValueError(f"Unknown format type: {format_type}")
         return template.render(**example)
 
+    def load_and_combine_datasets(self, input_files: List[str]) -> Any:
+        """
+        Load and optionally combine multiple datasets.
+
+        Args:
+            input_files (List[str]): List of input file paths.
+
+        Returns:
+            Combined dataset or list of individual datasets.
+        """
+        datasets = []
+        
+        for input_file in input_files:
+            file_extension = input_file.split('.')[-1]
+            if file_extension == 'jsonl':
+                file_extension = 'json'
+            dataset = load_dataset(
+                file_extension,
+                data_files=input_file,
+                split='train',
+                cache_dir=None
+            )
+            datasets.append(dataset)
+
+        if self.config.combine_files:
+            logger.info("Combining datasets...")
+            return concatenate_datasets(datasets)
+        
+        if len(datasets) > 1:
+            raise ValueError("Multiple datasets provided but combine_files is not enabled")
+        return datasets[0]
+
+    def calculate_subset_size(self, total_samples: int, size_spec: Union[int, float]) -> int:
+        """
+        Calculate the actual subset size based on the specification.
+
+        Args:
+            total_samples (int): Total number of samples in the dataset.
+            size_spec (Union[int, float]): Size specification (percentage if float, absolute if int).
+
+        Returns:
+            int: Actual number of samples to select.
+        """
+        if isinstance(size_spec, float):
+            # Treat as percentage
+            return max(1, int(size_spec / 100 * total_samples))
+        # Treat as absolute number
+        return min(size_spec, total_samples)
+
+    def get_subset_name(self, size_spec: Union[int, float], actual_size: int) -> str:
+        """
+        Generate appropriate subset name based on selection method.
+
+        Args:
+            size_spec (Union[int, float]): Original size specification.
+            actual_size (int): Actual number of samples selected.
+
+        Returns:
+            str: Descriptive name for the subset.
+        """
+        if isinstance(size_spec, float):
+            return f"percent_{size_spec:.1f}"
+        return f"samples_{actual_size}"
+
     def get_last_processed_batch(self, output_dir: str) -> Tuple[int, Optional[str]]:
         """
         Retrieves the last processed batch number and its file path from the output directory.
@@ -117,7 +182,7 @@ class DataProcessor:
             output_dir (str): The directory where batch files are stored.
 
         Returns:
-            Tuple[int, Optional[str]]: The last batch number and its file path.
+            Tuple[int, Optional[str]]: The last batch number and the corresponding batch file path.
         """
         batch_files = glob.glob(os.path.join(output_dir, 'batch_*.h5'))
         if not batch_files:
@@ -187,11 +252,12 @@ class DataProcessor:
         batch_texts = []
 
         # Initialize total_processed based on last batch
-        total_processed = (last_batch) * self.config.batch_size if last_batch >= 0 else 0
         if last_batch >= 0:
             # For the last batch, we need to check the number of samples processed
             embedding_size, _ = self.get_embedding_size_dim_from_file(last_batch_file)
-            total_processed += embedding_size
+            total_processed = last_batch * self.config.batch_size + embedding_size
+        else:
+            total_processed = 0
 
         batch_number = last_batch + 1
 
@@ -208,7 +274,9 @@ class DataProcessor:
             if i < total_processed:
                 continue  # Skip already processed samples
 
-            text = self.format_text(example, dataset.config_name or 'default')
+            text = self.format_text(example, format_type=self.config.template_name)
+            if i < 5:
+                logger.info(f"Example {i + 1}: {text}")
             batch_texts.append(text)
 
             if len(batch_texts) == self.config.batch_size:
@@ -334,35 +402,25 @@ class DataProcessor:
                 logger.info(f"Processed and removed {batch_file}")
 
             gc.collect()
-
-    def select_subsets(self, input_path: str, embeddings: torch.Tensor) -> Dict[int, List[int]]:
+            
+    def select_subsets(self, dataset_name: str, embeddings: torch.Tensor) -> Dict[Union[int, float], List[int]]:
         """
-        Selects subsets of the data based on embeddings using submodular optimization.
-
-        Args:
-            input_path (str): The path to the input data file.
-            embeddings (torch.Tensor): The embeddings tensor.
-
-        Returns:
-            Dict[int, List[int]]: A dictionary mapping subset sizes to lists of selected indices.
+        Enhanced subset selection supporting both percentage and absolute size specifications.
         """
-        # Initialize indices and shuffle
         indices = np.arange(len(embeddings))
         np.random.shuffle(indices)
         
-        # Partition data into folds
         fold_size = len(embeddings) // self.config.num_folds
         remainder = len(embeddings) % self.config.num_folds
 
         folds = []
         start_idx = 0
         for i in range(self.config.num_folds):
-            extra = 1 if i < remainder else 0  # Distribute the remainder among the first folds
+            extra = 1 if i < remainder else 0
             end_idx = start_idx + fold_size + extra
             folds.append(indices[start_idx:end_idx])
             start_idx = end_idx
 
-        # Distribute folds across GPUs
         gpu_assignments = []
         folds_per_gpu = self.config.num_folds // self.config.num_gpus
         extra_folds = self.config.num_folds % self.config.num_gpus
@@ -377,201 +435,257 @@ class DataProcessor:
                 gpu_id,
                 gpu_folds_info,
                 embeddings,
-                self.config.subset_sizes
+                self.config.subset_sizes,
+                len(embeddings)  # Pass total samples for absolute size calculation
             ))
             start_fold = end_fold
 
-        # Process folds in parallel using multiprocessing
         with Pool(processes=self.config.num_gpus) as pool:
             gpu_results = pool.map(process_folds_with_gpu, gpu_assignments)
 
-        # Combine results from all GPUs
         all_results = []
         for gpu_result in gpu_results:
             all_results.extend(gpu_result)
 
-        # Initialize combined subsets
         combined_subsets = {size: {"indices": [], "gains": []} for size in self.config.subset_sizes}
-
-        # Aggregate indices and gains from all folds
+        
         for fold_idx, result in all_results:
             for size in self.config.subset_sizes:
                 combined_subsets[size]["indices"].extend(result[size]["indices"])
                 combined_subsets[size]["gains"].extend(result[size]["gains"])
 
-        # Save metadata with indices and gains
-        base_name = os.path.splitext(os.path.basename(input_path))[0]
+        base_name = dataset_name
         subsets = {}
-        for size in self.config.subset_sizes:
-            # Sort indices by gains in descending order
+        
+        for size_spec in self.config.subset_sizes:
+            actual_size = self.calculate_subset_size(len(embeddings), size_spec)
             sorted_indices_gains = sorted(
-                zip(combined_subsets[size]["indices"], combined_subsets[size]["gains"]),
+                zip(combined_subsets[size_spec]["indices"], combined_subsets[size_spec]["gains"]),
                 key=lambda x: x[1],
                 reverse=True
-            )
-            sorted_indices = [x[0] for x in sorted_indices_gains]
+            )[:actual_size]  # Limit to actual_size
 
-            # Save metadata to file
+            sorted_indices = [x[0] for x in sorted_indices_gains]
+            sorted_gains = [x[1] for x in sorted_indices_gains]
+
+            subset_name = self.get_subset_name(size_spec, actual_size)
             metadata_file = os.path.join(
                 self.config.output_dir, 
-                f"{base_name}_fl_{self.config.num_folds}_partitions_{size}_subset_metadata.npz"
+                f"{base_name}_fl_{self.config.num_folds}_partitions_{subset_name}_metadata.npz"
             )
 
             np.savez(
                 metadata_file,
                 indices=sorted_indices,
-                gains=[x[1] for x in sorted_indices_gains]
+                gains=sorted_gains
             )
             logger.info(f"Saved metadata to {metadata_file}")
-            subsets[size] = sorted_indices
+            subsets[size_spec] = sorted_indices
 
         return subsets
-
-    def process_file(self, input_path: str, output_dir: str):
+    
+    def get_dataset_name(self, input_file: str) -> str:
         """
-        Processes a single input file by generating embeddings and selecting subsets.
-
+        Get a clean dataset name from the input file path.
+        
         Args:
-            input_path (str): The path to the input data file.
-            output_dir (str): The directory where outputs will be saved.
+            input_file (str): Input file path
+            
+        Returns:
+            str: Clean dataset name
+        """
+        # Extract filename without extension and path
+        base_name = os.path.splitext(os.path.basename(input_file))[0]
+        # Clean the name to make it filesystem-friendly
+        clean_name = re.sub(r'[^\w\-_]', '_', base_name)
+        return clean_name
+
+    def process_files(self, input_files: List[str], output_dir: str):
+        """
+        Process multiple input files with support for both combined and separate processing.
+        
+        Args:
+            input_files (List[str]): List of input files to process
+            output_dir (str): Output directory for results
         """
         try:
-            # Load dataset from input file
-            dataset = load_dataset(
-                input_path.split('.')[-1],
-                data_files=input_path,
-                split='train',
-                cache_dir=None
-            )
+            if self.config.combine_files:
+                # Process combined datasets
+                logger.info("Processing combined datasets...")
+                dataset = self.load_and_combine_datasets(input_files)
+                dataset_name = "combined_dataset"
+                
+                # Process combined dataset
+                self._process_single_dataset(dataset, dataset_name, output_dir, input_files[0])
+            else:
+                # Process each dataset separately
+                logger.info("Processing datasets separately...")
+                for input_file in input_files:
+                    dataset = self.load_and_combine_datasets([input_file])
+                    dataset_name = self.get_dataset_name(input_file)
+                    logger.info(f"Processing dataset: {dataset_name}")
+                    self._process_single_dataset(dataset, dataset_name, output_dir, input_file)
+        
+        except Exception as e:
+            logger.error(f"Error processing files: {str(e)}")
+            raise
+
+    def _process_single_dataset(self, dataset, dataset_name: str, output_dir: str, input_file: str):
+        """
+        Process a single dataset (either combined or individual).
+        
+        Args:
+            dataset: The dataset to process
+            dataset_name (str): Name of the dataset
+            output_dir (str): Output directory
+            input_file (str): Original input file path (for extension)
+        """
+        try:
+            # Create dataset-specific output directory
+            dataset_output_dir = os.path.join(output_dir, dataset_name)
+            os.makedirs(dataset_output_dir, exist_ok=True)
             
-            logger.info(f"Generating embeddings for {input_path}")
-            # Generate embeddings
+            logger.info(f"Generating embeddings for {dataset_name}")
             embedding_file = self.generate_embeddings(
                 dataset, 
-                os.path.join(output_dir, 'embeddings')
+                os.path.join(dataset_output_dir, 'embeddings')
             )
             
             logger.info("Loading embeddings for subset selection")
             with h5py.File(embedding_file, 'r') as f:
-                embeddings = torch.tensor(f['embeddings'][:], dtype=torch.float32)
+                embeddings_data = f['embeddings'][:]
+                if embeddings_data.size == 0:
+                    logger.warning(f"No embeddings generated for dataset {dataset_name}, skipping subset selection")
+                    return
+                embeddings = torch.tensor(embeddings_data, dtype=torch.float32)
             
             logger.info("Selecting subsets")
-            # Select subsets based on embeddings
-            subsets = self.select_subsets(input_path, embeddings)
+            subsets = self.select_subsets(dataset_name, embeddings)
             
             logger.info("Saving subsets")
-            base_name = os.path.splitext(os.path.basename(input_path))[0]
-            for size, indices in subsets.items():
-                # Create subset of the dataset
+            for size_spec, indices in subsets.items():
                 subset_data = dataset.select(indices)
-
-                # Determine size description
-                size_desc = SIZE_TO_REPLAY_DESC.get(size, "custom")
-                output_file = os.path.join(
-                    output_dir, 
-                    f"{base_name}_{size_desc}_subset.{input_path.split('.')[-1]}"
+                subset_name = self.get_subset_name(
+                    size_spec,
+                    len(indices)
                 )
-                # Save subset data to same format as input
-                extension = input_path.split('.')[-1]
-                if extension in ['json', 'jsonl']:
-                    subset_data.to_json(output_file, orient='records', lines=True)
-                elif extension == 'csv':
-                    subset_data.to_csv(output_file, index=False)
-                elif extension == 'parquet':
-                    subset_data.to_parquet(output_file)
-                logger.info(f"Saved {size}% subset to {output_file}")
-                    
-            # Clean up
-            os.remove(embedding_file)
+                
+                # Create subset filename with dataset name
+                output_file = os.path.join(
+                    dataset_output_dir, 
+                    f"{dataset_name}_{subset_name}_subset.{input_file.split('.')[-1]}"
+                )
+                
+                self._save_subset(subset_data, output_file, input_file)
+                logger.info(f"Saved subset with {len(indices)} samples to {output_file}")
+            
+            # Clean up resources
             del dataset, embeddings
             gc.collect()
             torch.cuda.empty_cache()
-                
+        
         except Exception as e:
-            logger.error(f"Error processing file {input_path}: {str(e)}")
+            logger.error(f"Error processing dataset {dataset_name}: {str(e)}")
             raise
+
+    def _save_subset(self, subset_data, output_file: str, input_file: str):
+        """
+        Save subset data to file in appropriate format.
+        
+        Args:
+            subset_data: The dataset subset to save
+            output_file (str): Output file path
+            input_file (str): Original input file path (for determining format)
+        """
+        extension = input_file.split('.')[-1]
+        if extension in ['json', 'jsonl']:
+            subset_data.to_json(output_file, orient='records', lines=True)
+        elif extension == 'csv':
+            subset_data.to_csv(output_file, index=False)
+        elif extension == 'parquet':
+            subset_data.to_parquet(output_file)
 
 def process_folds_with_gpu(args):
     """
-    Processes folds assigned to a GPU, computing the similarity matrix during subset selection.
-
-    Args:
-        args (Tuple): A tuple containing:
-            - gpu_id (int): The GPU ID to use.
-            - gpu_folds_info (List[Tuple[int, np.ndarray]]): List of fold indices and their corresponding data indices.
-            - embeddings (torch.Tensor): The embeddings tensor.
-            - subset_sizes (List[int]): List of subset sizes to generate.
-
-    Returns:
-        List[Tuple[int, Dict]]: A list of results for each fold, containing the fold index and subset information.
+    Process folds on GPU with support for both percentage and absolute size specifications.
     """
-    gpu_id, gpu_folds_info, embeddings, subset_sizes = args
-    torch.cuda.set_device(gpu_id)
-    device = f"cuda:{gpu_id}"
-
-    results = []
-    for fold_idx, fold_indices in gpu_folds_info:
-        try:
-            logger.info(f"Processing fold {fold_idx + 1} on GPU {gpu_id}")
-            
-            # Compute similarity matrix for this fold
-            fold_embeddings = embeddings[fold_indices].to(device)
-            
-            logger.info(f"Computing similarity matrix for fold {fold_idx + 1} on GPU {gpu_id}")
-            max_sim_mat = compute_pairwise_dense(
-                fold_embeddings,
-                batch_size=50000,
-                metric='cosine',
-                device=device,
-                scaling="additive"
-            )
-            similarity_matrix = max_sim_mat.cpu().numpy()
-            
-            subsets = {}
-            ds_func = FacilityLocationFunction(
-                n=similarity_matrix.shape[0],
-                sijs=similarity_matrix,
-                mode="dense",
-                separate_rep=False
-            )
-            
-            for size in subset_sizes:
-                logger.info(f"Selecting {size}% subset for fold {fold_idx + 1}")
-                budget = max(1, int(size / 100 * similarity_matrix.shape[0]))  # Ensure minimum budget of 1
+    gpu_id, gpu_folds_info, embeddings, subset_sizes, total_samples = args
+    try:
+        torch.cuda.set_device(gpu_id)
+        device = f"cuda:{gpu_id}"
+        results = []
+        for fold_idx, fold_indices in gpu_folds_info:
+            try:
+                logger.info(f"Processing fold {fold_idx + 1} on GPU {gpu_id}")
                 
-                subset_result = ds_func.maximize(
-                    budget=budget,
-                    optimizer="LazierThanLazyGreedy",
-                    epsilon=160,
-                    stopIfZeroGain=False,
-                    stopIfNegativeGain=False,
-                    verbose=False
+                fold_embeddings = embeddings[fold_indices].to(device)
+                
+                logger.info(f"Computing similarity matrix for fold {fold_idx + 1}")
+                max_sim_mat = compute_pairwise_dense(
+                    fold_embeddings,
+                    batch_size=50000,
+                    metric='cosine',
+                    device=device,
+                    scaling="additive"
+                )
+                similarity_matrix = max_sim_mat.cpu().numpy()
+                
+                subsets = {}
+                ds_func = FacilityLocationFunction(
+                    n=similarity_matrix.shape[0],
+                    sijs=similarity_matrix,
+                    mode="dense",
+                    separate_rep=False
                 )
                 
-                subset_indices = [fold_indices[x[0]] for x in subset_result]
-                subset_gains = [x[1] for x in subset_result]
-                subsets[size] = {
-                    "indices": subset_indices,
-                    "gains": subset_gains
-                }
-                logger.info(f"Completed {size}% subset selection for fold {fold_idx + 1}")
-            
-            results.append((fold_idx, subsets))
-        except Exception as e:
-            logger.error(f"Error processing fold {fold_idx + 1} on GPU {gpu_id}: {str(e)}")
-            raise
-        finally:
-            # Cleanup
-            del ds_func, similarity_matrix, fold_embeddings
-            gc.collect()
-            torch.cuda.empty_cache()
-    return results
+                for size_spec in subset_sizes:
+                    if isinstance(size_spec, float):
+                        # Percentage-based selection
+                        budget = max(1, math.ceil((size_spec / 100) * similarity_matrix.shape[0]))
+                    else:
+                        # Absolute number-based selection
+                        budget = max(1, math.ceil(size_spec * (similarity_matrix.shape[0] / total_samples)))
+                    
+                    logger.info(f"Selecting subset of size {budget} for fold {fold_idx + 1}")
+                    
+                    subset_result = ds_func.maximize(
+                        budget=budget,
+                        optimizer="LazierThanLazyGreedy",
+                        epsilon=160,
+                        stopIfZeroGain=False,
+                        stopIfNegativeGain=False,
+                        verbose=False
+                    )
+                    
+                    subset_indices = [fold_indices[x[0]] for x in subset_result]
+                    subset_gains = [x[1] for x in subset_result]
+                    subsets[size_spec] = {
+                        "indices": subset_indices,
+                        "gains": subset_gains
+                    }
+                    
+                results.append((fold_idx, subsets))
+                
+            except Exception as e:
+                logger.error(f"Error processing fold {fold_idx + 1} on GPU {gpu_id}: {str(e)}")
+                raise
+            finally:
+                for var in ['ds_func', 'similarity_matrix', 'fold_embeddings']:
+                    if var in locals():
+                        del locals()[var]
+                gc.collect()
+                torch.cuda.empty_cache()
+                
+        return results
+    except Exception as e:
+        logger.error(f"Error in process_folds_with_gpu on GPU {gpu_id}: {str(e)}")
+        raise
 
 def main():
     """
-    Main function to parse arguments and initiate data processing.
+    Enhanced main function with support for combined processing and multiple selection methods.
     """
-    parser = argparse.ArgumentParser(description='Data Processing with Embedding Generation and Subset Selection')
+    parser = argparse.ArgumentParser(description='Enhanced Data Processing with Combined Files Support')
     parser.add_argument('--input_files', nargs='+', required=True,
                         help='List of input files to process')
     parser.add_argument('--output_dir', required=True,
@@ -584,6 +698,10 @@ def main():
                         help='Maximum number of retries for failed operations')
     parser.add_argument('--retry_delay', type=int, default=30,
                         help='Delay between retries in seconds')
+    parser.add_argument('--combine_files', action='store_true',
+                        help='Combine all input files before processing')
+    parser.add_argument('--subset_sizes', nargs='+', type=str,
+                        help='List of subset sizes (use % suffix for percentages, otherwise treated as absolute numbers)')
     args = parser.parse_args()
 
     try:
@@ -591,24 +709,50 @@ def main():
         with open(args.config) as f:
             config_dict = json.load(f)
 
+        # Parse subset sizes from command line arguments
+        if args.subset_sizes:
+            subset_sizes = []
+            for size in args.subset_sizes:
+                if size.endswith('%'):
+                    # Convert percentage string to float
+                    subset_sizes.append(float(size[:-1]))
+                else:
+                    # Convert absolute number string to int
+                    subset_sizes.append(int(size))
+            config_dict['subset_sizes'] = subset_sizes
+
         config = ProcessingConfig(**config_dict)
+        
         # Update config with command-line arguments
         config.num_gpus = min(args.num_gpus, torch.cuda.device_count())
         config.max_retries = args.max_retries
         config.retry_delay = args.retry_delay
-        config.output_dir = args.output_dir  # Set output_dir in config
+        config.output_dir = args.output_dir
+        config.combine_files = args.combine_files
 
+        logger.info(f"Processing configuration: {config}")
+
+        # Initialize data processor based on encoder type
         os.makedirs(args.output_dir, exist_ok=True)
 
-        processor = DataProcessor(config, UnifiedBGEEncoder)
+        if config.encoder_type == "bge":
+            processor = DataProcessor(config, UnifiedBGEEncoder)
+        elif config.encoder_type == "openai":
+            processor = DataProcessor(config, OpenAIEncoder)
+        else:
+            raise ValueError(f"Unknown encoder type: {config.encoder_type}")
 
-        for input_file in args.input_files:
-            logger.info(f"Processing file: {input_file}")
-            processor.process_file(input_file, args.output_dir)
+        processor.process_files(args.input_files, args.output_dir)
+ 
 
     except Exception as e:
         logger.error(f"Processing failed: {str(e)}")
         raise
+
+    finally:
+        # Cleanup any temporary files or resources
+        gc.collect()
+        torch.cuda.empty_cache()
 
 if __name__ == "__main__":
     set_start_method('spawn', force=True)
