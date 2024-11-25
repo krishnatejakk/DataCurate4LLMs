@@ -1,5 +1,5 @@
 ####################################################################################################
-# Author: <ANONYMOUS>
+# Author: Krishnateja Killamsetty
 
 # This script performs instruction tuning on auto-regressive language models like Mistral, Llama2, Falcon, GPT-2 etc.
 
