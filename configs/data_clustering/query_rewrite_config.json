@@ -1,5 +1,5 @@
 {
-    "input_file": "/xuk/kk-subset-selection/subset_selection_and_analysis/data/query_rewrite/query_expand_outputs_v2.json",
+    "input_file": "/xuk/kk-subset-selection/subset_selection_and_analysis/data/query_rewrite/query_expand_outputs_v1.json",
     "output_dir": "/xuk/kk-subset-selection/subset_selection_and_analysis/data/query_rewrite/output",
     "encoder_model": "nvidia/NV-Embed-v2",
     "encoder_type": "nvembed",

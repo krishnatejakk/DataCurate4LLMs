@@ -177,7 +177,7 @@ class DataClustering:
         kn = KneeLocator(x, gains[1:], curve='convex', direction='decreasing')
         optimal_clusters = kn.knee
         if optimal_clusters is not None:
-            optimal_clusters += 10 # Add a buffer of 10 clusters
+            optimal_clusters += 1 # Add a buffer of 10 clusters
             optimal_clusters = min(optimal_clusters, len(gains))
             logger.info(f"Optimal number of clusters detected: {optimal_clusters}")
         else:
@@ -235,11 +235,11 @@ class DataClustering:
 
             # Compute diversity metrics
             diversity_metric = EmbeddingMaxDiversity(batch_size=self.config.batch_size)
-            diversity = diversity_metric(embeddings)
+            diversity = diversity_metric._compute(embeddings)
             logger.info(f"Max Diversity metric: {diversity}")
 
             diversity_metric = EmbeddingAverageDiversity(batch_size=self.config.batch_size)
-            diversity = diversity_metric(embeddings)
+            diversity = diversity_metric._compute(embeddings)
             logger.info(f"Average Diversity metric: {diversity}")
 
             # Continue with the rest of the processing
