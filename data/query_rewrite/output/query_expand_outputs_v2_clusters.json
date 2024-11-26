@@ -180,35 +180,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hi there."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Hello! How can I help you today?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Hi, I would like you to explain me the blockchain technology to me."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure thing! The blockchain is a decentralized digital ledger system that stores transactions across multiple computers so that any involved record cannot be altered retroactively, without the alteration of all subsequent blocks."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Can you tell me how data ends up at the start of this blockchain?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How are transactions added to the blockchain at the start?"
-            },
-            "similarity_to_center": 0.9033273458480835
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I bought a used laptop, now I want instructions on how to reset it."
                 },
                 {
@@ -229,48 +200,6 @@
                 "reworded version": "Where do I start to perform a factory reset on this used laptop?"
             },
             "similarity_to_center": 0.9026613235473633
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Which laptop should I buy?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "The Lenovo ThinkPad T480 is a great choice."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How about for a gaming laptop?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Which gaming laptop would you recommend?"
-            },
-            "similarity_to_center": 0.9008069038391113
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "What is blockchain?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "The blockchain is a decentralized digital ledger system that stores transactions across multiple computers so that any involved record cannot be altered retroactively, without the alteration of all subsequent blocks."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How does data end up at the start of a blockchain?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How are transactions added to the blockchain at the start?"
-            },
-            "similarity_to_center": 0.900111973285675
         },
         {
             "input": [
@@ -438,27 +367,6 @@
                 "reworded version": "Could you explain the k-means clustering algorithm, which is another clustering method?"
             },
             "similarity_to_center": 0.8947497606277466
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Hi, I need some help deciding which exercise routine I should follow."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can provide you with some basic options. You can either go for a strength training routine or a cardio routine. Depending on your fitness goals, you might prefer one over the other."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Can you recommend a specific routine for me under cardio?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Can you recommend a specific cardio exercise routine for me?"
-            },
-            "similarity_to_center": 0.8938636183738708
         },
         {
             "input": [
@@ -941,27 +849,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Are there any car dealerships near me?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Yes, there are several car dealerships near you."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Can you compare their ratings for me?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Could you compare the ratings of the car dealerships near me?"
-            },
-            "similarity_to_center": 0.8759639263153076
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "How do I check my oil?"
                 },
                 {
@@ -1276,48 +1163,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Does it rain more in Seattle or in Miami?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "It rains more in Seattle."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Does it snow more in Seattle or in Miami?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Does it snow more in Seattle?"
-            },
-            "similarity_to_center": 0.8675077557563782
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Which browser is the best for online safety?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "When considering online safety, there are several browsers to choose from, including Brave, Tor, and even Firefox with certain security add-ons installed."
-                },
-                {
-                    "speaker": "user",
-                    "text": "So, between those choices, which is the safest browser?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Which browser is the safest for online browsing?"
-            },
-            "similarity_to_center": 0.8674600720405579
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I have a Kia Optima from 2013."
                 },
                 {
@@ -1523,27 +1368,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Do you offer customer service?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Of course, we value customer service! However, we don't have a customer service team available to chat right now. You are chatting with an automated assistant."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What else do you offer?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What else, besides customer service, does your organization offer?"
-            },
-            "similarity_to_center": 0.8621056079864502
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "in your opinion what is more convenient, running or cycling?"
                 },
                 {
@@ -1723,35 +1547,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hi, I need help ordering a laptop."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help. Do you have a specific model in mind?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Yes, I would like to order the asus t100."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Great, I found the asus t100 with 4gb of ram and 128gb hardrive for $400. It's available with free two-day shipping."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Do they have any accessories for it?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Are there any accessories available for the asus t100 laptop that I'm ordering?"
-            },
-            "similarity_to_center": 0.8588516712188721
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I've recently started taking a medication for anxiety, and I was wondering if there are side effects I should be aware of?"
                 },
                 {
@@ -1907,48 +1702,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "What CDN providers are in Amazon Web Services\u2019 portfolio?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Amazon CloudFront and AWS Global Accelerator are both CDN services in the Amazon Web Services portfolio."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Which are the ones provided by Amazon Web Services?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Which CDN services are provided by Amazon Web Services?"
-            },
-            "similarity_to_center": 0.8548779487609863
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I need to buy a gift for a friend. The person doesn't like Taylor Swift, but enjoys beautiful flowers."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I recommend checking out this website that sells many ..."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Is there a way to purchase them quickly without shipping?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Is there a way to buy flowers quickly and without any shipping?"
-            },
-            "similarity_to_center": 0.8545076251029968
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Is it true that once you start Hairstimer hair loss serum, you have to use it forever?"
                 },
                 {
@@ -1991,35 +1744,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hi there. I need help with my new WiFi router."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I am here to help you. What seems to be the problem?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "My WiFi isn't working on my laptop. I believe it's connected to the WiFi, but the icon in the corner still says 'no internet access'."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I see, which laptop are you using?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "DELL inspiron."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Why does my DELL inspiron laptop say 'no internet access' when connected to the WiFi router?"
-            },
-            "similarity_to_center": 0.8535362482070923
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Hi there."
                 },
                 {
@@ -2057,56 +1781,6 @@
                 "reworded version": "How do I transfer a balance from one credit card to another?"
             },
             "similarity_to_center": 0.8532568216323853
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I want a designer shirt but I'm low on money."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "You could consider buying second-hand clothing."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Could I find such stores online?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Can I find second-hand clothing stores online?"
-            },
-            "similarity_to_center": 0.8531261682510376
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Hi"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Hello! How can I assist you today?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "What are your top selling books?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I'll check on that right now. Our top 3 selling books are: \"Book A\", \"Book B\", and \"Book C\". Each of them are best sellers in a different genre."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Which ones are mystery books?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Which of the top 3 selling books, 'Book A', 'Book B', and 'Book C', are mystery books?"
-            },
-            "similarity_to_center": 0.8517651557922363
         },
         {
             "input": [
@@ -2178,27 +1852,6 @@
                 "reworded version": "What can I do about my stomach problem if I don't have health insurance?"
             },
             "similarity_to_center": 0.8503492474555969
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I'm trying to find plays by William Shakespeare, what categories are available?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Our catalog is divided by genre and era. For Shakespeare's works, you can find them in the 'Plays' and 'Classics' categories."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Where can I find the classics?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Where in the catalog can I find Shakespeare in the 'Classics' genre?"
-            },
-            "similarity_to_center": 0.8502361178398132
         },
         {
             "input": [
@@ -2313,27 +1966,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I would like to add 1000GB of data to my wireless plan."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help with that. User added 1000GB of data for $12.99 / month."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Add 300GB to that."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Add 300GB of data to my wireless plan."
-            },
-            "similarity_to_center": 0.8478008508682251
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Should I wear a suit to the interview?"
                 },
                 {
@@ -2363,43 +1995,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I am having trouble with my wifi connection."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Ok. What kind of device are you using?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "I am using my Iphone."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I see. Are you connected to your home router or a public network?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "My home router."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Thanks. What is the exact issue you are facing with your wifi?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "The internet is very slow."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Why is my Iphone's wifi internet slow when I am connected to my home router?"
-            },
-            "similarity_to_center": 0.8444615602493286
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I'm thinking about buying my mother a gift. She is a tea expert."
                 },
                 {
@@ -2416,27 +2011,6 @@
                 "reworded version": "have you ever used the website Steeped Tea?"
             },
             "similarity_to_center": 0.8437231779098511
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I'm thinking about starting a company, so I need to register my business with the state."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help you with that. Your first step is to choose a business name that is not already taken and meets your state's requirements."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Would I be able to find out if a name is taken by searching on the state's website or would I have to check some other way?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Would I be able to find out if a business name is taken by searching on the state's website?"
-            },
-            "similarity_to_center": 0.8435874581336975
         },
         {
             "input": [
@@ -2592,48 +2166,6 @@
                 "reworded version": "What was the main point of the paper titled 'Computing Machinery and Intelligence' in which the Turing Test was introduced as a standard to determine a machine as intelligent based on its ability to imitate human responses?"
             },
             "similarity_to_center": 0.8309667110443115
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Excuse me, I am new here. Can you give me some information about the city?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, this is Miami. It has a lot of nice beach front property and many activities to partake in."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How's the nightlife here?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "how is the nightlife in Miami, given that it has a lot of nice beach front property and many activities to partake in?"
-            },
-            "similarity_to_center": 0.8294286727905273
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Where are the historical recordings of all sales calls?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "There are no recordings of sales calls because we do not record sales calls. We only take notes."
-                },
-                {
-                    "speaker": "user",
-                    "text": "does that extends back to the beginning of the company?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Are there historical records of sales call recordings dating back to the founding of the company?"
-            },
-            "similarity_to_center": 0.8253607749938965
         }
     ],
     "2": [
@@ -2785,35 +2317,6 @@
                 "reworded version": "The answer to my security question is 'Phoenix'."
             },
             "similarity_to_center": 0.9370197057723999
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Hi, I'm interested in buying a new TV."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help you with that. What is your budget?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "My budget is around $1000."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I see a 55 inch TV for $900 from Sony. Would you be interested in that?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Yes, I'll take it."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Yes, I'll take it."
-            },
-            "similarity_to_center": 0.93062424659729
         },
         {
             "input": [
@@ -3016,27 +2519,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Is \"Apples\" an acceptable brand for me to buy?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I'd need to see the full logo and brand messaging to recommend it."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Ok. how about this one?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How about this alternative brand logo and messaging?"
-            },
-            "similarity_to_center": 0.8829191327095032
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I have a question about my hotel reservation."
                 },
                 {
@@ -3136,43 +2618,6 @@
                 "reworded version": "What is the Parthenon made of?"
             },
             "similarity_to_center": 0.868057131767273
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Hello."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Hello there! How can I help you today?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "I'm looking to get a haircut."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help you with that! We have several stylists available. Are you looking for a men's or women's haircut?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Men's haircut."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Great, and do you want to add any additional services like a shampoo or a beard trim?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Just a regular haircut, that's all."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "I just want a regular men's haircut, without any additional services."
-            },
-            "similarity_to_center": 0.8630691766738892
         },
         {
             "input": [
@@ -3450,27 +2895,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "which eye drop is used to treat severe dry eyes?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "To treat severe dry eyes, Restasis Eye Drops can be used. It is a prescription medication and works by reducing the inflammation that can cause dry eyes."
-                },
-                {
-                    "speaker": "user",
-                    "text": "is that the only improvement available?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "is Restasis Eye Drops the only treatment for severe dry eyes?"
-            },
-            "similarity_to_center": 0.8405338525772095
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Are there limits on how much research can be performed in a weekly timeframe?"
                 },
                 {
@@ -3702,35 +3126,6 @@
                 "reworded version": "Can you tell me about matrix addition specifically?"
             },
             "similarity_to_center": 0.9205851554870605
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "What kind of furniture would you recommend for my office?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I would say to go with a desk chair with good back support and an adjustable desk so you can customize your office to your needs."
-                },
-                {
-                    "speaker": "user",
-                    "text": "And what about budget?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "For a good quality desk and chair, you're looking at spending around $300 to $500."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Can you recommend any specific brands?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Can you recommend any specific brands?"
-            },
-            "similarity_to_center": 0.9178727269172668
         },
         {
             "input": [
@@ -4255,35 +3650,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I need to speak about the return policy for a TV."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I'd be glad to help. Our return policy is as follows. You have 14 days from the date of receiving the product to return it for a full refund. The product must be unused, in its original packaging, and in the same condition as when it was shipped."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Don't I have 30 days?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "No, our standard policy is 14 days. However, please check your order. You might have qualified for an extension."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Didn't I see something in the advertisement about 30 days?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Isn't the return policy 30 days as stated in the advertisement?"
-            },
-            "similarity_to_center": 0.8602113723754883
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I'm a student."
                 },
                 {
@@ -4368,27 +3734,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I have a large breed dog and she needs to lose some weight. I'm thinking about adding more veggies to her meals. Which veggies do you recommend and how much should I add?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "If you're going to add vegetables to your dog's diet, I recommend adding a mix of green beans, carrots, and peas. Green beans are low in calories, high in fiber and vitamins. Carrots are low in calories and high in fiber and vitamin A. Peas, like green beans, are low in calories and high in fiber and vitamins. For a large dog, you can add approximately one to one and a half cups of these veggies a day."
-                },
-                {
-                    "speaker": "user",
-                    "text": "got it. Just to make sure, how about the order? Are they all the same amount?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "is the same amount of green beans, carrots, and peas recommended for a large dog, when adding vegetables to their diet?"
-            },
-            "similarity_to_center": 0.8515450358390808
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I'd like to sign up for the 8 AM meditation class on Monday."
                 },
                 {
@@ -4426,64 +3771,6 @@
                 "reworded version": "What are the differences between CRISPR-Cas9 and CRISPR-Cpf1, considering that CRISPR-Cas9 is a widely used tool for precise gene editing and CRISPR-based diagnostics?"
             },
             "similarity_to_center": 0.8468641042709351
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "i have a question about this paper. i don't understand the part on page 7 where the author is calculating the power."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I see. Well, typically when calculating power in the context of physics, it's done by multiplying force by distance and dividing by time. However, each context might be a bit different. If you could provide me the specific equation and variables from the paper, I might be able to help you further."
-                },
-                {
-                    "speaker": "user",
-                    "text": "oh. it wasn't a physics question. it was about the electric power in the country and how it's calculated, not about physics."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "I have a question about electric power calculations in this paper, not physics calculations."
-            },
-            "similarity_to_center": 0.8440244197845459
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I recently became fascinated by particle physics. Could you please recommend some books on the subject?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Of course, I'd be happy to help. I would recommend \"The Particle at the End of the Universe\" by Sean Carroll."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Thanks. And what about a textbook?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I'd suggest \"Introduction to Elementary Particles\" by David J. Griffiths."
-                },
-                {
-                    "speaker": "user",
-                    "text": "That's really enlightening."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Glad to help!"
-                },
-                {
-                    "speaker": "user",
-                    "text": "I'm curious, who are some notable physicists in the field?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Who are some notable physicists in the field of particle physics?"
-            },
-            "similarity_to_center": 0.8415500521659851
         },
         {
             "input": [
@@ -4539,39 +3826,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I need help creating a presentation for work."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help with that. What's the topic of the presentation?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "It's about our company's latest product launch."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Great, and what kind of information should be included in the presentation?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "We need to cover the features of the product, the benefits for the customer, and the pricing."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Also, we need to include some screenshots of the product in action."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "I need to include information on the features, benefits, and pricing of the product, as well as screenshots of the product in action in the presentation."
-            },
-            "similarity_to_center": 0.8400611281394958
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Was Tony Hawk an actor before he became a pro skateboarder?"
                 },
                 {
@@ -4588,43 +3842,6 @@
                 "reworded version": "Did Tony Hawk have any roles as an actor before he became a pro skateboarder?"
             },
             "similarity_to_center": 0.8367182016372681
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Hi there! Can you order me a gift for my niece?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Of course! I'd be happy to help you with that. What's her name and how old is she?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Her name is Lily, and she's turning 12."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Wonderful! And do you have a specific gift in mind for her or a budget I should consider?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "No, I don't have a budget. I just want it to be something she likes."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I see. In that case, I recommend a new book series that is quite popular among her age group, and I would suggest purchasing a gift card to her favorite clothing store."
-                },
-                {
-                    "speaker": "user",
-                    "text": "No, I don't want to send her clothes. I want her to enjoy the book."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Can you recommend a specific new book series for a 12-year-old girl named Lily as a gift instead of clothing?"
-            },
-            "similarity_to_center": 0.8325613141059875
         }
     ],
     "28": [
@@ -4677,27 +3894,6 @@
                 "reworded version": "I'm unsure"
             },
             "similarity_to_center": 0.977136492729187
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I'm ordering some stationary from your shop. I would like 100 sheets of blue paper, 50 envelopes, and a pack of 12 ballpoint pens."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, what type of ballpoint pens would you like?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Anything is fine. Surprise me."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Anything is fine"
-            },
-            "similarity_to_center": 0.8816245794296265
         },
         {
             "input": [
@@ -4970,6 +4166,100 @@
             "similarity_to_center": 0.863170862197876
         }
     ],
+    "38": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "What is blockchain?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "The blockchain is a decentralized digital ledger system that stores transactions across multiple computers so that any involved record cannot be altered retroactively, without the alteration of all subsequent blocks."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How does data end up at the start of a blockchain?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How are transactions added to the blockchain at the start?"
+            },
+            "similarity_to_center": 1.0000001192092896
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi there."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Hello! How can I help you today?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Hi, I would like you to explain me the blockchain technology to me."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure thing! The blockchain is a decentralized digital ledger system that stores transactions across multiple computers so that any involved record cannot be altered retroactively, without the alteration of all subsequent blocks."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Can you tell me how data ends up at the start of this blockchain?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How are transactions added to the blockchain at the start?"
+            },
+            "similarity_to_center": 0.9899477958679199
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I would like to add 1000GB of data to my wireless plan."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help with that. User added 1000GB of data for $12.99 / month."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Add 300GB to that."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Add 300GB of data to my wireless plan."
+            },
+            "similarity_to_center": 0.8483457565307617
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Where are the historical recordings of all sales calls?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "There are no recordings of sales calls because we do not record sales calls. We only take notes."
+                },
+                {
+                    "speaker": "user",
+                    "text": "does that extends back to the beginning of the company?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Are there historical records of sales call recordings dating back to the founding of the company?"
+            },
+            "similarity_to_center": 0.8370830416679382
+        }
+    ],
     "16": [
         {
             "input": [
@@ -5042,48 +4332,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I think I heard that the CEO position at IBM has changed hands\nrecently?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Yes, that's correct. Arvind Krishna succeeded Ginni Rometty as\nthe CEO of IBM in April, 2020."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How is Rometty doing now?\n```"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How is Ginni Rometty, the previous CEO of IBM, doing now?"
-            },
-            "similarity_to_center": 0.8839762210845947
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Let me try again. Who is the CEO of IBM?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "As of 2012, the CEO of IBM is Ginni Rometty."
-                },
-                {
-                    "speaker": "user",
-                    "text": "and before that?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Who was the CEO of IBM before Ginni Rometty?"
-            },
-            "similarity_to_center": 0.875805139541626
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "What is the total number of employees in Google?"
                 },
                 {
@@ -5142,56 +4390,6 @@
                 "reworded version": "Who are the stars in The Dark Knight?"
             },
             "similarity_to_center": 0.8578788042068481
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Who is the CEO of IBM?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I am not sure. I can look it up for you."
-                },
-                {
-                    "speaker": "user",
-                    "text": "I mean what about the current one?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "The current CEO of IBM is Ginni Rometty."
-                },
-                {
-                    "speaker": "user",
-                    "text": "where is she from?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Where is the current CEO of IBM, Ginni Rometty, from?"
-            },
-            "similarity_to_center": 0.8551048040390015
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "is it true that microsoft and mcafee are the same company?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "No, that is not true. Microsoft and McAfee are two separate companies. Microsoft does own LinkedIn and GitHub, while McAfee was acquired by Intel and then sold to a private consortium called TPG."
-                },
-                {
-                    "speaker": "user",
-                    "text": "what companies does microsoft own?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "what other companies does microsoft own?"
-            },
-            "similarity_to_center": 0.8539911508560181
         },
         {
             "input": [
@@ -5603,35 +4801,6 @@
                 "reworded version": "how long should I cook each side of the grilled cheese sandwich for?"
             },
             "similarity_to_center": 0.8478190898895264
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Can you help me with a recipe for beef bourguignon?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I'd be happy to help. But first, let me ask, do you want to cook it in the oven or on the stovetop?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "On the stovetop."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Alright, then you start by saut\u00e9ing diced bacon in a Dutch oven until it's crispy."
-                },
-                {
-                    "speaker": "user",
-                    "text": "I don't have diced bacon, can I use sliced bacon?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Can I use sliced bacon instead of diced bacon to make beef bourguignon on the stovetop?"
-            },
-            "similarity_to_center": 0.8433642387390137
         }
     ],
     "25": [
@@ -5838,27 +5007,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I am looking for a new smartphone. I am considering Android but I am not sure if I will like it."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Android is a great system that allows you to customize your smartphone to your needs."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How is the battery life on an Android smartphone?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How is the battery life on an Android smartphone, knowing that it is a great system that allows you to customize it to your needs?"
-            },
-            "similarity_to_center": 0.8878193497657776
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "What are the three towers of University of Texas?"
                 },
                 {
@@ -5972,27 +5120,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I am interested in buying an electric car. Is there anything I should know before buying one?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Electric cars don't require gas and produce less emissions than traditional cars. However, they can be more expensive upfront and may have limited range compared to gas cars."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How long does the battery last?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How long does the battery last in an electric car?"
-            },
-            "similarity_to_center": 0.8650164604187012
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "What is the difference between 32-bit and 64-bit systems?"
                 },
                 {
@@ -6009,48 +5136,6 @@
                 "reworded version": "how does storage capacity differ between 32-bit and 64-bit systems?"
             },
             "similarity_to_center": 0.861771285533905
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I am a college student, and I need a new laptop as my old one is no longer functioning. Which one is the best for me?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "There are several laptops that would meet your needs. If you are looking for a budget-friendly option, the Acer Aspire Series has many good options. If you prefer a Mac, the MacBook Air is a great choice. It has good specs and it is relatively less expensive compared to other MacBooks. It's also quite lightweight and portable, making it ideal for carrying around to different parts of a campus. If you prioritize battery life, the Lenovo ThinkPad X1 Carbon has excellent battery life and a very good keyboard."
-                },
-                {
-                    "speaker": "user",
-                    "text": "great. how long do these batteries usually last?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "how long do the batteries in the Acer Aspire, MacBook Air, and Lenovo ThinkPad X1 Carbon laptops usually last?"
-            },
-            "similarity_to_center": 0.8579494953155518
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Is the Sony WH-1000XM3 a good headphone for noise cancellation?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "The Sony WH-1000XM3 headphone is known for its excellent noise-canceling feature."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Does it have a good sound quality too?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Does the Sony WH-1000XM3 headphone have a good sound quality?"
-            },
-            "similarity_to_center": 0.8466712236404419
         }
     ],
     "26": [
@@ -6216,48 +5301,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Can you give me some information about the company? But please highlight the products and services."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, we have a wide array of ..."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What's the pricing for the products and services?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What are the prices of the products and services the company offers?"
-            },
-            "similarity_to_center": 0.8899986743927002
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Please suggest me some Italian restaurants in New York City."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Here are a few Italian restaurants you might like in New York City: 1) L'Artusi 2) Osteria Morini 3) Babbo."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What is the price range for L'Artusi?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "What is the price range for L'Artusi?"
-            },
-            "similarity_to_center": 0.8897631168365479
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I saw that you have the Sony WH-1000XM4 for $369.99."
                 },
                 {
@@ -6274,52 +5317,6 @@
                 "reworded version": "What is the price of the Bose QuietComfort 35 II headphones?"
             },
             "similarity_to_center": 0.8860280513763428
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Can you recommend a nearby Spanish restaurant?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Yes, La Bodega is a highly-rated Spanish restaurant in the area."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How much is the cheapest entree?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How much is the cheapest entree at La Bodega?"
-            },
-            "similarity_to_center": 0.8830540180206299
-        },
-        {
-            "input": [
-                {
-                    "speaker": "agent",
-                    "text": "Hello! I see you are looking for shoes. We have a variety of brands available from Nike to Adidas to Puma."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Yes, I am looking for running shoes."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "We have a wide range of running shoes. Nike has the Air Zoom shoes which are great for marathon runners and Adidas has the Ultraboost shoes which are best for long-distance runners."
-                },
-                {
-                    "speaker": "user",
-                    "text": "I am more of a Nike person. Can you tell me the price of the Air Zoom shoes?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "How much are the Nike Air Zoom running shoes?"
-            },
-            "similarity_to_center": 0.8729724884033203
         },
         {
             "input": [
@@ -6349,27 +5346,6 @@
                 "reworded version": "Will the housing market in the Bay Area stay expensive?"
             },
             "similarity_to_center": 0.8716538548469543
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I coulldt find any good seafood restaurants nearby, can you help me find some?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help you with that. There's a restaurant called Fresh Catch Seafood, which has great reviews. Here's the address: 1234 Main Street."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Ah - right. I saw that one. Can you recommend any other seafood restaurant nearby?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Can you recommend any other seafood restaurants nearby?"
-            },
-            "similarity_to_center": 0.8704075813293457
         },
         {
             "input": [
@@ -6412,27 +5388,6 @@
                 "reworded version": "Does Minerva's return policy cover the shipping cost?"
             },
             "similarity_to_center": 0.8628784418106079
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Could you help me with financial advice?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, we have financial advisors available for consultation."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Are they free of charge?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Are the financial advisors available for consultation free of charge?"
-            },
-            "similarity_to_center": 0.8613094091415405
         },
         {
             "input": [
@@ -6662,27 +5617,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "When does the iPhone 8 come out?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "It is rumored to be released in September 2017."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Are the shipping rates going to be steep?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "what are the shipping rates for the new iPhone?"
-            },
-            "similarity_to_center": 0.8737611174583435
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Can you suggest some thumb drives? I need at least 128GB and around 30 dollars."
                 },
                 {
@@ -6699,56 +5633,6 @@
                 "reworded version": "What is the capacity of the Kingston DataTraveler SE9 and how much does it cost?"
             },
             "similarity_to_center": 0.8720564842224121
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I booked flight AI 123 to Londres on October 3rd."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I changed your flight to AI 123 to Londres on October 3rd for you."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Don't forget to reserve me window seat."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Please reserve a window seat for me on flight AI 123 to Londres on October 3rd."
-            },
-            "similarity_to_center": 0.871616780757904
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Hi, can you help me find the cheapest flight from Toronto to Berlin?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Of course! What are your travel dates?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "August 15th to August 30th."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Great. I found a flight for $750. Would you like me to book it?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Sure, I will pay with my Visa."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Can you please book a flight from Toronto to Berlin for me from August 15th to August 30th, and charge it to my Visa card?"
-            },
-            "similarity_to_center": 0.8715959191322327
         },
         {
             "input": [
@@ -6879,31 +5763,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hello, I need information on two properties in Boston."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, I can help with that. What would you like to know about the properties?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "When were the properties built?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "What are the prices for the two properties?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What are the prices for the two properties in Boston and when were they built?"
-            },
-            "similarity_to_center": 0.8604541420936584
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I'm looking to book a flight, do you have any good recommendations for airlines?"
                 },
                 {
@@ -6941,35 +5800,6 @@
                 "reworded version": "How much does a typical gold bar weigh in ounces and what is its cost?"
             },
             "similarity_to_center": 0.8543010950088501
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I'm looking for a hotel room in Paris."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "There are many great options, from budget to luxury."
-                },
-                {
-                    "speaker": "user",
-                    "text": "I need a hotel in the Marais district."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "For the Marais district, I would recommend Le Relais des Halles or Hotel Beaubourg."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What's the price range of these hotels?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What is the price range of Le Relais des Halles and Hotel Beaubourg in Paris?"
-            },
-            "similarity_to_center": 0.8541804552078247
         },
         {
             "input": [
@@ -7215,48 +6045,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Sorry I didn't catch that. What type of cuisine does this restaurant serve?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "This restaurant serves Italian cuisine."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What are some of their most popular dishes?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What are some popular dishes at this Italian restaurant?"
-            },
-            "similarity_to_center": 0.8756521940231323
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Can you tell me the price of Tesla's Cybertruck?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "The Cybertruck starts at $39,900."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What about the dual motor version?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "What is the price of the dual motor version of Tesla's Cybertruck?"
-            },
-            "similarity_to_center": 0.8745367527008057
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I'm planning to go backpacking for two weeks this summer, what are the recommended supplies and clothing?"
                 },
                 {
@@ -7273,27 +6061,6 @@
                 "reworded version": "how much food and water should I bring per day for two-week backpacking trip?"
             },
             "similarity_to_center": 0.8743417859077454
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I will get a black Honda accord with sunroof for 20k. Is that a good deal?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "That sounds a bit expensive for that model and year."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What about a green Honda mini van with rear camera?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Is a green Honda mini van with rear camera for around 20k also a good deal?"
-            },
-            "similarity_to_center": 0.8717005252838135
         },
         {
             "input": [
@@ -7339,27 +6106,6 @@
                 "reworded version": "I would like a large pizza with sausage and mushrooms and hand tossed crust, that's it."
             },
             "similarity_to_center": 0.8693103790283203
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I am looking for best restaurants in Italy."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Italy is a beautiful country with many diverse and delicious culinary options. Some popular regions for food include Tuscany, Emilia-Romagna, Lombardy, and Sicily. In Tuscany, you can find dishes like bistecca alla fiorentina, ribollita, and pappa al pomodoro. It's also home to Chianti wine. In Emilia-Romagna, you'll find tortellini, lasagna, and prosciutto di Parma, among other delicacies. Lombardy is known for risotto, while Sicily offers unique dishes like arancini and cannoli."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What about the seafood?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What about seafood restaurants in Italy?"
-            },
-            "similarity_to_center": 0.8679757714271545
         },
         {
             "input": [
@@ -7444,27 +6190,6 @@
                 "reworded version": "What's the deadline for filing my income taxes? April 15th, 2023."
             },
             "similarity_to_center": 0.8595730066299438
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I am a vegan and I want to take a vacation in Spain."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "There are many vegetarian and vegan restaurants in Spain, especially in larger cities like Madrid and Barcelona."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What about traditional dishes in Spain?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "are there vegan versions of traditional Spanish dishes?"
-            },
-            "similarity_to_center": 0.8476508259773254
         }
     ],
     "15": [
@@ -7572,27 +6297,6 @@
                 "reworded version": "Where is your company headquarters?"
             },
             "similarity_to_center": 0.8798756003379822
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I'm looking for a local restaurant that serves sushi."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "There are 5 sushi restaurants near you that are popular among local residents."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Great, which one is the closest?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "which sushi restaurant near me is the closest?"
-            },
-            "similarity_to_center": 0.8713107705116272
         },
         {
             "input": [
@@ -7742,6 +6446,134 @@
             "similarity_to_center": 0.8305031061172485
         }
     ],
+    "35": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Sorry I didn't catch that. What type of cuisine does this restaurant serve?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "This restaurant serves Italian cuisine."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What are some of their most popular dishes?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What are some popular dishes at this Italian restaurant?"
+            },
+            "similarity_to_center": 1.0
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I am looking for best restaurants in Italy."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Italy is a beautiful country with many diverse and delicious culinary options. Some popular regions for food include Tuscany, Emilia-Romagna, Lombardy, and Sicily. In Tuscany, you can find dishes like bistecca alla fiorentina, ribollita, and pappa al pomodoro. It's also home to Chianti wine. In Emilia-Romagna, you'll find tortellini, lasagna, and prosciutto di Parma, among other delicacies. Lombardy is known for risotto, while Sicily offers unique dishes like arancini and cannoli."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What about the seafood?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What about seafood restaurants in Italy?"
+            },
+            "similarity_to_center": 0.893521785736084
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'm looking for a burger place nearby."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "There is a Five Guys restaurant 3 miles away from your location."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What's on the menu?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What's on the menu at the Five Guys restaurant that is 3 miles away from my location?"
+            },
+            "similarity_to_center": 0.8865143060684204
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Can you recommend a nearby Spanish restaurant?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Yes, La Bodega is a highly-rated Spanish restaurant in the area."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How much is the cheapest entree?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How much is the cheapest entree at La Bodega?"
+            },
+            "similarity_to_center": 0.8832671642303467
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'm looking for a local restaurant that serves sushi."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "There are 5 sushi restaurants near you that are popular among local residents."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Great, which one is the closest?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "which sushi restaurant near me is the closest?"
+            },
+            "similarity_to_center": 0.8771105408668518
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I am a vegan and I want to take a vacation in Spain."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "There are many vegetarian and vegan restaurants in Spain, especially in larger cities like Madrid and Barcelona."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What about traditional dishes in Spain?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "are there vegan versions of traditional Spanish dishes?"
+            },
+            "similarity_to_center": 0.8648922443389893
+        }
+    ],
     "10": [
         {
             "input": [
@@ -7789,93 +6621,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hi, I would like to rent a car for a day."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, what type of car would you like to rent?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "A convertible would be nice."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Great, I found a red convertible available for rent tomorrow."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Ok, I'll take it."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Ok, I'll take it."
-            },
-            "similarity_to_center": 0.9318952560424805
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I'd like to order some shoes."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, what size shoes are you looking for?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "10.5. I need casual shoes and preferably brown shoes."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I've found some brown casual shoes in size 10.5 for you."
-                },
-                {
-                    "speaker": "user",
-                    "text": "okay, I'll take them."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Okay, I will take them."
-            },
-            "similarity_to_center": 0.9164831042289734
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Hi, I am looking for a wireless bluetooth headset."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, we have many options for bluetooth headphones. Do you want them to be noise canceling?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Yes, that would be great."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "There are many options in the $150 to $200 range."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Cool, I think I am going to go with that."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Cool, I think I am going to go with that."
-            },
-            "similarity_to_center": 0.9153306484222412
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Hi, I'm looking for a restaurant in San Francisco."
                 },
                 {
@@ -7905,27 +6650,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hi, I need to check if the sample you sent is non-toxic."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Yes, the sample we sent is non-toxic and safe to handle and dispose of in regular household trash."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Good. I will dispose of it correctly then."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Good. I will dispose of it correctly then."
-            },
-            "similarity_to_center": 0.8963840007781982
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "What's a good way to burn off some energy before bedtime?"
                 },
                 {
@@ -7942,27 +6666,6 @@
                 "reworded version": "Maybe I'll do jumping jacks in my room."
             },
             "similarity_to_center": 0.8906371593475342
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Book a ticket for my wife and I to Santa Fe, NM for July 11, 2021 leaving at 7pm and returning on July 17, 2021 also at 7pm on the United Airlines."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I've found a ticket for your wife and you on a United Airlines flight departing on July 11, 2021 at 7pm from an origin airport of your choice and returning on July 17, 2021 at 7pm. Are you ready to make the booking?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "And make sure I have a window seat for the flight."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Make sure I have a window seat for the flight."
-            },
-            "similarity_to_center": 0.882680356502533
         },
         {
             "input": [
@@ -8039,27 +6742,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hi, I'm interested in purchasing some new socks."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Certainly, what type of socks are you looking for?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Of course, I would like to buy some black socks."
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "I would like to purchase some black socks."
-            },
-            "similarity_to_center": 0.8648025393486023
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I'm looking for a hotel room in Downtown Los Angeles, CA for two adults for next Friday and Saturday."
                 },
                 {
@@ -8085,27 +6767,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I need a table for 6 at 7 PM."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "I reserved a table for 6 at 7 PM for you."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Don't forget the candles."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Remember to reserve candles for the table for 6 at 7 PM."
-            },
-            "similarity_to_center": 0.8616865873336792
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I am a professor at the university."
                 },
                 {
@@ -8122,64 +6783,284 @@
                 "reworded version": "contact me early next week, as I will be in a meeting now."
             },
             "similarity_to_center": 0.8592814207077026
+        }
+    ],
+    "41": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Can you give me some information about the company? But please highlight the products and services."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, we have a wide array of ..."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What's the pricing for the products and services?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What are the prices of the products and services the company offers?"
+            },
+            "similarity_to_center": 1.0000001192092896
         },
         {
             "input": [
                 {
                     "speaker": "user",
-                    "text": "We need new floor speakers and a wireless speaker."
+                    "text": "Please suggest me some Italian restaurants in New York City."
                 },
                 {
                     "speaker": "agent",
-                    "text": "Sounds good. To confirm, you want to purchase two floor speakers and one wireless speaker?"
+                    "text": "Here are a few Italian restaurants you might like in New York City: 1) L'Artusi 2) Osteria Morini 3) Babbo."
                 },
                 {
                     "speaker": "user",
-                    "text": "Yes, that's correct."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Great, anything else today?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "No, that's all. I'll pick those up when I get off work tomorrow."
+                    "text": "What is the price range for L'Artusi?"
                 }
             ],
             "output": {
-                "class": "non-standalone",
-                "reworded version": "I'll pick up two floor speakers and one wireless speaker when I get off work tomorrow."
+                "class": "standalone",
+                "reworded version": "What is the price range for L'Artusi?"
             },
-            "similarity_to_center": 0.846580982208252
+            "similarity_to_center": 0.8949910998344421
         },
         {
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I'd like to place a new order."
+                    "text": "Can you tell me the price of Tesla's Cybertruck?"
                 },
                 {
                     "speaker": "agent",
-                    "text": "Great! Here are a few questions to ensure I can help you place the correct order. Are you a new or returning customer, and do you have a promo code?"
+                    "text": "The Cybertruck starts at $39,900."
                 },
                 {
                     "speaker": "user",
-                    "text": "Yes, I'm returning and have a promo code."
+                    "text": "What about the dual motor version?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "What is the price of the dual motor version of Tesla's Cybertruck?"
+            },
+            "similarity_to_center": 0.876673698425293
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "When does the iPhone 8 come out?"
                 },
                 {
                     "speaker": "agent",
-                    "text": "Great! Here's what I need. Please provide the promo code and tell me the details of the product you would like to order."
+                    "text": "It is rumored to be released in September 2017."
                 },
                 {
                     "speaker": "user",
-                    "text": "I want 2 pairs of socks, that's all."
+                    "text": "Are the shipping rates going to be steep?"
                 }
             ],
             "output": {
                 "class": "non-standalone",
-                "reworded version": "I want to order 2 pairs of socks using the promo code I have as a returning customer."
+                "reworded version": "what are the shipping rates for the new iPhone?"
             },
-            "similarity_to_center": 0.8451181650161743
+            "similarity_to_center": 0.8763595223426819
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'm interested in buying the red coat."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great choice! The red coat is available in sizes small, medium, and large."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What are the prices for the coat sizes?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What are the prices for the red coat in sizes small, medium, and large?"
+            },
+            "similarity_to_center": 0.8747822046279907
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Could you help me with financial advice?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, we have financial advisors available for consultation."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Are they free of charge?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Are the financial advisors available for consultation free of charge?"
+            },
+            "similarity_to_center": 0.8744155764579773
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hello, I need information on two properties in Boston."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help with that. What would you like to know about the properties?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "When were the properties built?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "What are the prices for the two properties?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What are the prices for the two properties in Boston and when were they built?"
+            },
+            "similarity_to_center": 0.8717418313026428
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Do you offer customer service?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Of course, we value customer service! However, we don't have a customer service team available to chat right now. You are chatting with an automated assistant."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What else do you offer?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What else, besides customer service, does your organization offer?"
+            },
+            "similarity_to_center": 0.8701887130737305
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'm looking for a hotel room in Paris."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "There are many great options, from budget to luxury."
+                },
+                {
+                    "speaker": "user",
+                    "text": "I need a hotel in the Marais district."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "For the Marais district, I would recommend Le Relais des Halles or Hotel Beaubourg."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What's the price range of these hotels?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What is the price range of Le Relais des Halles and Hotel Beaubourg in Paris?"
+            },
+            "similarity_to_center": 0.8690205216407776
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Who is IBM's biggest competitor?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "IBM's biggest competitors are Amazon Web Services and Microsoft Azure."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What are their main products?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What are the main products of IBM's biggest competitors, Amazon Web Services and Microsoft Azure?"
+            },
+            "similarity_to_center": 0.8588961362838745
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "What CDN providers are in Amazon Web Services\u2019 portfolio?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Amazon CloudFront and AWS Global Accelerator are both CDN services in the Amazon Web Services portfolio."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Which are the ones provided by Amazon Web Services?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Which CDN services are provided by Amazon Web Services?"
+            },
+            "similarity_to_center": 0.8579663634300232
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I need help creating a presentation for work."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help with that. What's the topic of the presentation?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "It's about our company's latest product launch."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great, and what kind of information should be included in the presentation?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "We need to cover the features of the product, the benefits for the customer, and the pricing."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Also, we need to include some screenshots of the product in action."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "I need to include information on the features, benefits, and pricing of the product, as well as screenshots of the product in action in the presentation."
+            },
+            "similarity_to_center": 0.8562174439430237
         }
     ],
     "31": [
@@ -8245,27 +7126,6 @@
                 "reworded version": "How old was Galileo\u2019s Daughter when she died in 1634?"
             },
             "similarity_to_center": 0.8417534828186035
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "What instrument does Joe Satriani use to play his epic song Summer Song?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Joe Satriani uses an electric guitar, a Paul Reed Smith Custom 24, to play his epic song Summer Song."
-                },
-                {
-                    "speaker": "user",
-                    "text": "How long has he been using it for?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How long has Joe Satriani has been using his Paul Reed Smith Custom 24 electric guitar for?"
-            },
-            "similarity_to_center": 0.8334906101226807
         }
     ],
     "6": [
@@ -8498,6 +7358,305 @@
                 "reworded version": "I'm running the latest version of Chrome, but I'm still having trouble accessing the website. Can you help?"
             },
             "similarity_to_center": 0.8740192651748657
+        }
+    ],
+    "34": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, I would like to rent a car for a day."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, what type of car would you like to rent?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "A convertible would be nice."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great, I found a red convertible available for rent tomorrow."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Ok, I'll take it."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Ok, I'll take it."
+            },
+            "similarity_to_center": 1.0000001192092896
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, I'm interested in buying a new TV."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help you with that. What is your budget?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "My budget is around $1000."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I see a 55 inch TV for $900 from Sony. Would you be interested in that?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Yes, I'll take it."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Yes, I'll take it."
+            },
+            "similarity_to_center": 0.9842753410339355
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'd like to order some shoes."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, what size shoes are you looking for?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "10.5. I need casual shoes and preferably brown shoes."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I've found some brown casual shoes in size 10.5 for you."
+                },
+                {
+                    "speaker": "user",
+                    "text": "okay, I'll take them."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Okay, I will take them."
+            },
+            "similarity_to_center": 0.9671299457550049
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, I am looking for a wireless bluetooth headset."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, we have many options for bluetooth headphones. Do you want them to be noise canceling?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Yes, that would be great."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "There are many options in the $150 to $200 range."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Cool, I think I am going to go with that."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Cool, I think I am going to go with that."
+            },
+            "similarity_to_center": 0.9286389350891113
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, I need to check if the sample you sent is non-toxic."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Yes, the sample we sent is non-toxic and safe to handle and dispose of in regular household trash."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Good. I will dispose of it correctly then."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Good. I will dispose of it correctly then."
+            },
+            "similarity_to_center": 0.9071823954582214
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'm ordering some stationary from your shop. I would like 100 sheets of blue paper, 50 envelopes, and a pack of 12 ballpoint pens."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, what type of ballpoint pens would you like?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Anything is fine. Surprise me."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Anything is fine"
+            },
+            "similarity_to_center": 0.8870589137077332
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hello."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Hello there! How can I help you today?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "I'm looking to get a haircut."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help you with that! We have several stylists available. Are you looking for a men's or women's haircut?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Men's haircut."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great, and do you want to add any additional services like a shampoo or a beard trim?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Just a regular haircut, that's all."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "I just want a regular men's haircut, without any additional services."
+            },
+            "similarity_to_center": 0.8632887601852417
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "We need new floor speakers and a wireless speaker."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sounds good. To confirm, you want to purchase two floor speakers and one wireless speaker?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Yes, that's correct."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great, anything else today?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "No, that's all. I'll pick those up when I get off work tomorrow."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "I'll pick up two floor speakers and one wireless speaker when I get off work tomorrow."
+            },
+            "similarity_to_center": 0.855791449546814
+        }
+    ],
+    "40": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I think I heard that the CEO position at IBM has changed hands\nrecently?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Yes, that's correct. Arvind Krishna succeeded Ginni Rometty as\nthe CEO of IBM in April, 2020."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How is Rometty doing now?\n```"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How is Ginni Rometty, the previous CEO of IBM, doing now?"
+            },
+            "similarity_to_center": 1.0
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Let me try again. Who is the CEO of IBM?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "As of 2012, the CEO of IBM is Ginni Rometty."
+                },
+                {
+                    "speaker": "user",
+                    "text": "and before that?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Who was the CEO of IBM before Ginni Rometty?"
+            },
+            "similarity_to_center": 0.9058654308319092
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Who is the CEO of IBM?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I am not sure. I can look it up for you."
+                },
+                {
+                    "speaker": "user",
+                    "text": "I mean what about the current one?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "The current CEO of IBM is Ginni Rometty."
+                },
+                {
+                    "speaker": "user",
+                    "text": "where is she from?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Where is the current CEO of IBM, Ginni Rometty, from?"
+            },
+            "similarity_to_center": 0.9037226438522339
         }
     ],
     "11": [
@@ -9142,77 +8301,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "Hi there!"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Hello! How are you doing today?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Whats the weather like?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "The weather today is sunny with a high of 75 degrees and a low of 55 degrees."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Really? Are you sure?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Can you confirm the weather is sunny with temperatures between 55 and 75 degrees?"
-            },
-            "similarity_to_center": 0.887052059173584
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I love the weather in Seattle."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Seattle has 154 days of precipitation per year on average, but it doesn't snow often."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Is it gloomy there?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "How gloomy is the weather in Seattle?"
-            },
-            "similarity_to_center": 0.8854469060897827
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I've noticed that the weather has been cooler the last few days."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Yes, temperatures in the area have dropped due to a surge of cold weather coming in from the north."
-                },
-                {
-                    "speaker": "user",
-                    "text": "is this normal for this time of year?"
-                }
-            ],
-            "output": {
-                "class": "standalone",
-                "reworded version": "Is this cooler weather normal for this time of year?"
-            },
-            "similarity_to_center": 0.875014066696167
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "Should I wear my sneakers today or flip flops?"
                 },
                 {
@@ -9229,39 +8317,6 @@
                 "reworded version": "is a sweater needed, given the forecast of partly cloudy with a high near 70\u00b0F?"
             },
             "similarity_to_center": 0.8678642511367798
-        },
-        {
-            "input": [
-                {
-                    "speaker": "agent",
-                    "text": "Hello. Which city do you need weather information for?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Portland."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Okay, is that Portland, Oregon or Portland, Maine?"
-                },
-                {
-                    "speaker": "user",
-                    "text": "Portland, Oregon."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Got it. The current temperature is 45 degrees with partly cloudy skies."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Also, what's the wind chill?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "what's the wind chill in Portland, Oregon, where the current temperature is 45 degrees and skies are partly cloudy?"
-            },
-            "similarity_to_center": 0.8596430420875549
         }
     ],
     "19": [
@@ -9390,6 +8445,638 @@
                 "reworded version": "I want to book 2 adults and 2 children's tickets with Park Hopper to the Magic Kingdom."
             },
             "similarity_to_center": 0.8336472511291504
+        }
+    ],
+    "33": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "What kind of furniture would you recommend for my office?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I would say to go with a desk chair with good back support and an adjustable desk so you can customize your office to your needs."
+                },
+                {
+                    "speaker": "user",
+                    "text": "And what about budget?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "For a good quality desk and chair, you're looking at spending around $300 to $500."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Can you recommend any specific brands?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Can you recommend any specific brands?"
+            },
+            "similarity_to_center": 1.0
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Is \"Apples\" an acceptable brand for me to buy?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I'd need to see the full logo and brand messaging to recommend it."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Ok. how about this one?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How about this alternative brand logo and messaging?"
+            },
+            "similarity_to_center": 0.9068825244903564
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Which laptop should I buy?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "The Lenovo ThinkPad T480 is a great choice."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How about for a gaming laptop?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Which gaming laptop would you recommend?"
+            },
+            "similarity_to_center": 0.906132698059082
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, I need some help deciding which exercise routine I should follow."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can provide you with some basic options. You can either go for a strength training routine or a cardio routine. Depending on your fitness goals, you might prefer one over the other."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Can you recommend a specific routine for me under cardio?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Can you recommend a specific cardio exercise routine for me?"
+            },
+            "similarity_to_center": 0.9000622034072876
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I coulldt find any good seafood restaurants nearby, can you help me find some?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help you with that. There's a restaurant called Fresh Catch Seafood, which has great reviews. Here's the address: 1234 Main Street."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Ah - right. I saw that one. Can you recommend any other seafood restaurant nearby?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Can you recommend any other seafood restaurants nearby?"
+            },
+            "similarity_to_center": 0.8878580927848816
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Are there any car dealerships near me?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Yes, there are several car dealerships near you."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Can you compare their ratings for me?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Could you compare the ratings of the car dealerships near me?"
+            },
+            "similarity_to_center": 0.8819000720977783
+        },
+        {
+            "input": [
+                {
+                    "speaker": "agent",
+                    "text": "Hello! I see you are looking for shoes. We have a variety of brands available from Nike to Adidas to Puma."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Yes, I am looking for running shoes."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "We have a wide range of running shoes. Nike has the Air Zoom shoes which are great for marathon runners and Adidas has the Ultraboost shoes which are best for long-distance runners."
+                },
+                {
+                    "speaker": "user",
+                    "text": "I am more of a Nike person. Can you tell me the price of the Air Zoom shoes?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "How much are the Nike Air Zoom running shoes?"
+            },
+            "similarity_to_center": 0.8763998746871948
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I will get a black Honda accord with sunroof for 20k. Is that a good deal?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "That sounds a bit expensive for that model and year."
+                },
+                {
+                    "speaker": "user",
+                    "text": "What about a green Honda mini van with rear camera?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Is a green Honda mini van with rear camera for around 20k also a good deal?"
+            },
+            "similarity_to_center": 0.871790885925293
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Can you recommend a romantic film?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, The Notebook is a great romantic film."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Recommend me something else, please."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Can you recommend another romantic film besides The Notebook?"
+            },
+            "similarity_to_center": 0.8716535568237305
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Which browser is the best for online safety?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "When considering online safety, there are several browsers to choose from, including Brave, Tor, and even Firefox with certain security add-ons installed."
+                },
+                {
+                    "speaker": "user",
+                    "text": "So, between those choices, which is the safest browser?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Which browser is the safest for online browsing?"
+            },
+            "similarity_to_center": 0.8675800561904907
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, I'm interested in purchasing some new socks."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Certainly, what type of socks are you looking for?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Of course, I would like to buy some black socks."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "I would like to purchase some black socks."
+            },
+            "similarity_to_center": 0.8653499484062195
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I want a designer shirt but I'm low on money."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "You could consider buying second-hand clothing."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Could I find such stores online?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Can I find second-hand clothing stores online?"
+            },
+            "similarity_to_center": 0.8638262152671814
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "On Netflix, what docuseries would you recommend?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "One highly-rated docuseries on Netflix is 'Explained'. It covers a variety of topics in short and easily-digestible episodes."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Is the production quality good?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "What is the production quality of the docuseries 'Explained' on Netflix?"
+            },
+            "similarity_to_center": 0.8636637926101685
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I need to speak about the return policy for a TV."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I'd be glad to help. Our return policy is as follows. You have 14 days from the date of receiving the product to return it for a full refund. The product must be unused, in its original packaging, and in the same condition as when it was shipped."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Don't I have 30 days?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "No, our standard policy is 14 days. However, please check your order. You might have qualified for an extension."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Didn't I see something in the advertisement about 30 days?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Isn't the return policy 30 days as stated in the advertisement?"
+            },
+            "similarity_to_center": 0.8605585098266602
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, I need help ordering a laptop."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help. Do you have a specific model in mind?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Yes, I would like to order the asus t100."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great, I found the asus t100 with 4gb of ram and 128gb hardrive for $400. It's available with free two-day shipping."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Do they have any accessories for it?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Are there any accessories available for the asus t100 laptop that I'm ordering?"
+            },
+            "similarity_to_center": 0.8604001998901367
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I need to buy a gift for a friend. The person doesn't like Taylor Swift, but enjoys beautiful flowers."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I recommend checking out this website that sells many ..."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Is there a way to purchase them quickly without shipping?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Is there a way to buy flowers quickly and without any shipping?"
+            },
+            "similarity_to_center": 0.8581066131591797
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Hello! How can I assist you today?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "What are your top selling books?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I'll check on that right now. Our top 3 selling books are: \"Book A\", \"Book B\", and \"Book C\". Each of them are best sellers in a different genre."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Which ones are mystery books?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Which of the top 3 selling books, 'Book A', 'Book B', and 'Book C', are mystery books?"
+            },
+            "similarity_to_center": 0.8580087423324585
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "is it true that microsoft and mcafee are the same company?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "No, that is not true. Microsoft and McAfee are two separate companies. Microsoft does own LinkedIn and GitHub, while McAfee was acquired by Intel and then sold to a private consortium called TPG."
+                },
+                {
+                    "speaker": "user",
+                    "text": "what companies does microsoft own?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "what other companies does microsoft own?"
+            },
+            "similarity_to_center": 0.8576829433441162
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'm trying to find plays by William Shakespeare, what categories are available?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Our catalog is divided by genre and era. For Shakespeare's works, you can find them in the 'Plays' and 'Classics' categories."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Where can I find the classics?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Where in the catalog can I find Shakespeare in the 'Classics' genre?"
+            },
+            "similarity_to_center": 0.8552547693252563
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I have a large breed dog and she needs to lose some weight. I'm thinking about adding more veggies to her meals. Which veggies do you recommend and how much should I add?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "If you're going to add vegetables to your dog's diet, I recommend adding a mix of green beans, carrots, and peas. Green beans are low in calories, high in fiber and vitamins. Carrots are low in calories and high in fiber and vitamin A. Peas, like green beans, are low in calories and high in fiber and vitamins. For a large dog, you can add approximately one to one and a half cups of these veggies a day."
+                },
+                {
+                    "speaker": "user",
+                    "text": "got it. Just to make sure, how about the order? Are they all the same amount?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "is the same amount of green beans, carrots, and peas recommended for a large dog, when adding vegetables to their diet?"
+            },
+            "similarity_to_center": 0.8528434038162231
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Is the Sony WH-1000XM3 a good headphone for noise cancellation?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "The Sony WH-1000XM3 headphone is known for its excellent noise-canceling feature."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Does it have a good sound quality too?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Does the Sony WH-1000XM3 headphone have a good sound quality?"
+            },
+            "similarity_to_center": 0.8506072759628296
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'd like to place a new order."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great! Here are a few questions to ensure I can help you place the correct order. Are you a new or returning customer, and do you have a promo code?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Yes, I'm returning and have a promo code."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great! Here's what I need. Please provide the promo code and tell me the details of the product you would like to order."
+                },
+                {
+                    "speaker": "user",
+                    "text": "I want 2 pairs of socks, that's all."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "I want to order 2 pairs of socks using the promo code I have as a returning customer."
+            },
+            "similarity_to_center": 0.8480324149131775
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I recently became fascinated by particle physics. Could you please recommend some books on the subject?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Of course, I'd be happy to help. I would recommend \"The Particle at the End of the Universe\" by Sean Carroll."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Thanks. And what about a textbook?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I'd suggest \"Introduction to Elementary Particles\" by David J. Griffiths."
+                },
+                {
+                    "speaker": "user",
+                    "text": "That's really enlightening."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Glad to help!"
+                },
+                {
+                    "speaker": "user",
+                    "text": "I'm curious, who are some notable physicists in the field?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Who are some notable physicists in the field of particle physics?"
+            },
+            "similarity_to_center": 0.8463578224182129
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I'm thinking about starting a company, so I need to register my business with the state."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I can help you with that. Your first step is to choose a business name that is not already taken and meets your state's requirements."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Would I be able to find out if a name is taken by searching on the state's website or would I have to check some other way?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Would I be able to find out if a business name is taken by searching on the state's website?"
+            },
+            "similarity_to_center": 0.8462730646133423
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Can you help me with a recipe for beef bourguignon?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I'd be happy to help. But first, let me ask, do you want to cook it in the oven or on the stovetop?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "On the stovetop."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Alright, then you start by saut\u00e9ing diced bacon in a Dutch oven until it's crispy."
+                },
+                {
+                    "speaker": "user",
+                    "text": "I don't have diced bacon, can I use sliced bacon?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Can I use sliced bacon instead of diced bacon to make beef bourguignon on the stovetop?"
+            },
+            "similarity_to_center": 0.8442876935005188
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi there! Can you order me a gift for my niece?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Of course! I'd be happy to help you with that. What's her name and how old is she?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Her name is Lily, and she's turning 12."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Wonderful! And do you have a specific gift in mind for her or a budget I should consider?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "No, I don't have a budget. I just want it to be something she likes."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I see. In that case, I recommend a new book series that is quite popular among her age group, and I would suggest purchasing a gift card to her favorite clothing store."
+                },
+                {
+                    "speaker": "user",
+                    "text": "No, I don't want to send her clothes. I want her to enjoy the book."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Can you recommend a specific new book series for a 12-year-old girl named Lily as a gift instead of clothing?"
+            },
+            "similarity_to_center": 0.8413511514663696
         }
     ],
     "30": [
@@ -9709,6 +9396,74 @@
                 "reworded version": "Does the estimated population of California in 2020 of about 39.51 million from the US Census Bureau include the City of Los Angeles?"
             },
             "similarity_to_center": 0.8286921977996826
+        }
+    ],
+    "37": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I am having trouble with my wifi connection."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Ok. What kind of device are you using?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "I am using my Iphone."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I see. Are you connected to your home router or a public network?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "My home router."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Thanks. What is the exact issue you are facing with your wifi?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "The internet is very slow."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Why is my Iphone's wifi internet slow when I am connected to my home router?"
+            },
+            "similarity_to_center": 1.0
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi there. I need help with my new WiFi router."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, I am here to help you. What seems to be the problem?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "My WiFi isn't working on my laptop. I believe it's connected to the WiFi, but the icon in the corner still says 'no internet access'."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I see, which laptop are you using?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "DELL inspiron."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Why does my DELL inspiron laptop say 'no internet access' when connected to the WiFi router?"
+            },
+            "similarity_to_center": 0.8980764746665955
         }
     ],
     "22": [
@@ -10265,27 +10020,6 @@
             "input": [
                 {
                     "speaker": "user",
-                    "text": "I'm looking for a burger place nearby."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "There is a Five Guys restaurant 3 miles away from your location."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What's on the menu?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What's on the menu at the Five Guys restaurant that is 3 miles away from my location?"
-            },
-            "similarity_to_center": 0.8571805953979492
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
                     "text": "I'm flying into Madrid on July 2nd in the morning and spending two weeks in Spain."
                 },
                 {
@@ -10494,6 +10228,113 @@
                 "reworded version": "does the $35 a day rental fee for the Toyota Corolla include insurance for the next week?"
             },
             "similarity_to_center": 0.8368548154830933
+        }
+    ],
+    "36": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I am interested in buying an electric car. Is there anything I should know before buying one?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Electric cars don't require gas and produce less emissions than traditional cars. However, they can be more expensive upfront and may have limited range compared to gas cars."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How long does the battery last?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How long does the battery last in an electric car?"
+            },
+            "similarity_to_center": 0.9999999403953552
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I am a college student, and I need a new laptop as my old one is no longer functioning. Which one is the best for me?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "There are several laptops that would meet your needs. If you are looking for a budget-friendly option, the Acer Aspire Series has many good options. If you prefer a Mac, the MacBook Air is a great choice. It has good specs and it is relatively less expensive compared to other MacBooks. It's also quite lightweight and portable, making it ideal for carrying around to different parts of a campus. If you prioritize battery life, the Lenovo ThinkPad X1 Carbon has excellent battery life and a very good keyboard."
+                },
+                {
+                    "speaker": "user",
+                    "text": "great. how long do these batteries usually last?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "how long do the batteries in the Acer Aspire, MacBook Air, and Lenovo ThinkPad X1 Carbon laptops usually last?"
+            },
+            "similarity_to_center": 0.9082870483398438
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I am looking for a new smartphone. I am considering Android but I am not sure if I will like it."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Android is a great system that allows you to customize your smartphone to your needs."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How is the battery life on an Android smartphone?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How is the battery life on an Android smartphone, knowing that it is a great system that allows you to customize it to your needs?"
+            },
+            "similarity_to_center": 0.8988707065582275
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "i have a question about this paper. i don't understand the part on page 7 where the author is calculating the power."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I see. Well, typically when calculating power in the context of physics, it's done by multiplying force by distance and dividing by time. However, each context might be a bit different. If you could provide me the specific equation and variables from the paper, I might be able to help you further."
+                },
+                {
+                    "speaker": "user",
+                    "text": "oh. it wasn't a physics question. it was about the electric power in the country and how it's calculated, not about physics."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "I have a question about electric power calculations in this paper, not physics calculations."
+            },
+            "similarity_to_center": 0.8463410139083862
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "What instrument does Joe Satriani use to play his epic song Summer Song?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Joe Satriani uses an electric guitar, a Paul Reed Smith Custom 24, to play his epic song Summer Song."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How long has he been using it for?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How long has Joe Satriani has been using his Paul Reed Smith Custom 24 electric guitar for?"
+            },
+            "similarity_to_center": 0.8366146087646484
         }
     ],
     "14": [
@@ -10816,6 +10657,269 @@
                 "reworded version": "I need to go now."
             },
             "similarity_to_center": 0.8955134153366089
+        }
+    ],
+    "39": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I booked flight AI 123 to Londres on October 3rd."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I changed your flight to AI 123 to Londres on October 3rd for you."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Don't forget to reserve me window seat."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Please reserve a window seat for me on flight AI 123 to Londres on October 3rd."
+            },
+            "similarity_to_center": 0.9999998807907104
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Book a ticket for my wife and I to Santa Fe, NM for July 11, 2021 leaving at 7pm and returning on July 17, 2021 also at 7pm on the United Airlines."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I've found a ticket for your wife and you on a United Airlines flight departing on July 11, 2021 at 7pm from an origin airport of your choice and returning on July 17, 2021 at 7pm. Are you ready to make the booking?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "And make sure I have a window seat for the flight."
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Make sure I have a window seat for the flight."
+            },
+            "similarity_to_center": 0.9297102689743042
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi, can you help me find the cheapest flight from Toronto to Berlin?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Of course! What are your travel dates?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "August 15th to August 30th."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Great. I found a flight for $750. Would you like me to book it?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Sure, I will pay with my Visa."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Can you please book a flight from Toronto to Berlin for me from August 15th to August 30th, and charge it to my Visa card?"
+            },
+            "similarity_to_center": 0.87786865234375
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I need a table for 6 at 7 PM."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "I reserved a table for 6 at 7 PM for you."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Don't forget the candles."
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Remember to reserve candles for the table for 6 at 7 PM."
+            },
+            "similarity_to_center": 0.8750978708267212
+        }
+    ],
+    "42": [
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I love the weather in Seattle."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Seattle has 154 days of precipitation per year on average, but it doesn't snow often."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Is it gloomy there?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "How gloomy is the weather in Seattle?"
+            },
+            "similarity_to_center": 1.0
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Does it rain more in Seattle or in Miami?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "It rains more in Seattle."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Does it snow more in Seattle or in Miami?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Does it snow more in Seattle?"
+            },
+            "similarity_to_center": 0.9084042906761169
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Hi there!"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Hello! How are you doing today?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Whats the weather like?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "The weather today is sunny with a high of 75 degrees and a low of 55 degrees."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Really? Are you sure?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "Can you confirm the weather is sunny with temperatures between 55 and 75 degrees?"
+            },
+            "similarity_to_center": 0.8872867822647095
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "I've noticed that the weather has been cooler the last few days."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Yes, temperatures in the area have dropped due to a surge of cold weather coming in from the north."
+                },
+                {
+                    "speaker": "user",
+                    "text": "is this normal for this time of year?"
+                }
+            ],
+            "output": {
+                "class": "standalone",
+                "reworded version": "Is this cooler weather normal for this time of year?"
+            },
+            "similarity_to_center": 0.8870663642883301
+        },
+        {
+            "input": [
+                {
+                    "speaker": "agent",
+                    "text": "Hello. Which city do you need weather information for?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Portland."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Okay, is that Portland, Oregon or Portland, Maine?"
+                },
+                {
+                    "speaker": "user",
+                    "text": "Portland, Oregon."
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Got it. The current temperature is 45 degrees with partly cloudy skies."
+                },
+                {
+                    "speaker": "user",
+                    "text": "Also, what's the wind chill?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "what's the wind chill in Portland, Oregon, where the current temperature is 45 degrees and skies are partly cloudy?"
+            },
+            "similarity_to_center": 0.8619742393493652
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "which eye drop is used to treat severe dry eyes?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "To treat severe dry eyes, Restasis Eye Drops can be used. It is a prescription medication and works by reducing the inflammation that can cause dry eyes."
+                },
+                {
+                    "speaker": "user",
+                    "text": "is that the only improvement available?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "is Restasis Eye Drops the only treatment for severe dry eyes?"
+            },
+            "similarity_to_center": 0.8468641042709351
+        },
+        {
+            "input": [
+                {
+                    "speaker": "user",
+                    "text": "Excuse me, I am new here. Can you give me some information about the city?"
+                },
+                {
+                    "speaker": "agent",
+                    "text": "Sure, this is Miami. It has a lot of nice beach front property and many activities to partake in."
+                },
+                {
+                    "speaker": "user",
+                    "text": "How's the nightlife here?"
+                }
+            ],
+            "output": {
+                "class": "non-standalone",
+                "reworded version": "how is the nightlife in Miami, given that it has a lot of nice beach front property and many activities to partake in?"
+            },
+            "similarity_to_center": 0.8421540260314941
         }
     ],
     "29": [
@@ -11225,27 +11329,6 @@
                 "reworded version": "Which do you prefer, red or blue?"
             },
             "similarity_to_center": 0.8748400211334229
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "I'm interested in buying the red coat."
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Great choice! The red coat is available in sizes small, medium, and large."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What are the prices for the coat sizes?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What are the prices for the red coat in sizes small, medium, and large?"
-            },
-            "similarity_to_center": 0.8696218729019165
         }
     ],
     "20": [
@@ -11419,48 +11502,6 @@
                 "reworded version": "What is the content of The Miracle of Mindfulness?"
             },
             "similarity_to_center": 0.8672546744346619
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Can you recommend a romantic film?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "Sure, The Notebook is a great romantic film."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Recommend me something else, please."
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "Can you recommend another romantic film besides The Notebook?"
-            },
-            "similarity_to_center": 0.8669593930244446
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "On Netflix, what docuseries would you recommend?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "One highly-rated docuseries on Netflix is 'Explained'. It covers a variety of topics in short and easily-digestible episodes."
-                },
-                {
-                    "speaker": "user",
-                    "text": "Is the production quality good?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What is the production quality of the docuseries 'Explained' on Netflix?"
-            },
-            "similarity_to_center": 0.8603790998458862
         }
     ],
     "23": [
@@ -11547,27 +11588,6 @@
                 "reworded version": "why did you use 2019 Q1 revenue to calculate my March bonus, and not 2020 Q1 funds?"
             },
             "similarity_to_center": 0.8608393669128418
-        },
-        {
-            "input": [
-                {
-                    "speaker": "user",
-                    "text": "Who is IBM's biggest competitor?"
-                },
-                {
-                    "speaker": "agent",
-                    "text": "IBM's biggest competitors are Amazon Web Services and Microsoft Azure."
-                },
-                {
-                    "speaker": "user",
-                    "text": "What are their main products?"
-                }
-            ],
-            "output": {
-                "class": "non-standalone",
-                "reworded version": "What are the main products of IBM's biggest competitors, Amazon Web Services and Microsoft Azure?"
-            },
-            "similarity_to_center": 0.8539704084396362
         }
     ]
 }

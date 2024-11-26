@@ -177,6 +177,8 @@ class DataClustering:
         kn = KneeLocator(x, gains[1:], curve='convex', direction='decreasing')
         optimal_clusters = kn.knee
         if optimal_clusters is not None:
+            optimal_clusters += 10 # Add a buffer of 10 clusters
+            optimal_clusters = min(optimal_clusters, len(gains))
             logger.info(f"Optimal number of clusters detected: {optimal_clusters}")
         else:
             logger.warning("KneeLocator did not detect a knee point. Using default max clusters.")
@@ -198,17 +200,16 @@ class DataClustering:
             clusters[cluster_id].sort(key=lambda x: x['similarity_to_center'], reverse=True)
         return clusters
 
-    def save_clusters(self, clusters: Dict[int, List[Dict[str, Any]]]):
+    def save_clusters(self, clusters: Dict[int, List[Dict[str, Any]]], output_file: str):
         """
         Save clusters with data samples to a JSON file.
         """
-        output_file = os.path.join(self.config.output_dir, "clusters.json")
         with open(output_file, "w") as f:
             json.dump(clusters, f, indent=4)
         logger.info(f"Clusters saved to {output_file}")
 
 
-    def save_elbow_plot(self, gains: List[float]):
+    def save_elbow_plot(self, gains: List[float], plot_file: str):
         """
         Save the gains plot to visualize the elbow point.
         """
@@ -219,7 +220,6 @@ class DataClustering:
         plt.xlabel("Number of Clusters")
         plt.ylabel("Gains")
         plt.title("Submodular Gains vs Number of Clusters")
-        plot_file = os.path.join(self.config.output_dir, "gains_plot.png")
         plt.savefig(plot_file)
         plt.close()
         logger.info(f"Gains plot saved to {plot_file}")
@@ -233,8 +233,14 @@ class DataClustering:
             texts = self.format_texts(data)
             embeddings = self.encode_texts(texts)
 
-            # Compute diversity metrics (existing code)
-            # ...
+            # Compute diversity metrics
+            diversity_metric = EmbeddingMaxDiversity(batch_size=self.config.batch_size)
+            diversity = diversity_metric(embeddings)
+            logger.info(f"Max Diversity metric: {diversity}")
+
+            diversity_metric = EmbeddingAverageDiversity(batch_size=self.config.batch_size)
+            diversity = diversity_metric(embeddings)
+            logger.info(f"Average Diversity metric: {diversity}")
 
             # Continue with the rest of the processing
             similarity = self.compute_similarity_matrix(embeddings)
@@ -262,8 +268,13 @@ class DataClustering:
 
             # Save results
             os.makedirs(self.config.output_dir, exist_ok=True)
-            self.save_clusters(clusters)
-            self.save_elbow_plot(gains)
+            # Extract the filename from the input file path
+            file_name = os.path.basename(self.config.input_file).split('.')[0]
+            file_extension = os.path.basename(self.config.input_file).split('.')[1]
+            output_file = os.path.join(self.config.output_dir, file_name + "_clusters." + file_extension)
+            self.save_clusters(clusters, output_file)
+            plot_file = os.path.join(self.config.output_dir, file_name + "_gains_plot.png")
+            self.save_elbow_plot(gains[1:], plot_file)
 
         except Exception as e:
             logger.error(f"Error during processing: {str(e)}")
