@@ -1,5 +1,5 @@
 import torch
-from src.encoders.bge_encoder import BGEEncoder
+from src.encoders.bge_unified_encoder import UnifiedBGEEncoder as BGEEncoder
 from src.encoders.sentence_encoder import SentenceEncoder
 from src.encoders.sfr_mistral_encoder import SFRMistralEncoder
 from src.utils.compute_pairwise_similarity import compute_pairwise_dense, compute_pairwise_sparse

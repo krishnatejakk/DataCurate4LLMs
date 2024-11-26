@@ -12,5 +12,6 @@
   "seed": 42,
   "template_name": "conversation",
   "combine_files": false,
-  "encoder_type": "bge"
+  "encoder_type": "bge",
+  "encoder_model": "BAAI/bge-m3"
 }

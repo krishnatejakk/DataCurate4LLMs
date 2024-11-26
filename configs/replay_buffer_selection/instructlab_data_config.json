@@ -2,15 +2,14 @@
     "instruction": "Generate embeddings that capture the core meaning of user-assistant conversations across multiple domains, ensuring generalization and suitability for clustering based on semantic similarity.",
     "query_description": "Conversation",
     "templates": {
-      "default": "{{ text }}",
-      "conversation": "{% for conv in messages if conv.role != 'system' %}{{ conv.role }}: {{ conv.content }}\n{% endfor %}",
-      "qa": "Question: {{ question }}\nAnswer: {{ answer }}"
+      "message": "{% for msg in messages if msg.role != 'system' %}{{ msg.role }}: {{ msg.content }}\n{% endfor %}"
     },
     "batch_size": 100000,
     "num_folds": 50,
     "subset_sizes": ["50000"],
     "seed": 42,
-    "template_name": "conversation",
+    "template_name": "message",
     "combine_files": true,
-    "encoder_type": "openai"
+    "encoder_type": "openai",
+    "encoder_model": "text-embedding-3-large"
   }

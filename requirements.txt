@@ -4,11 +4,14 @@ numpy
 datasets
 accelerate
 transformers
+evaluate
+peft
+accelerate
 git+https://github.com/decile-team/submodlib.git
 tqdm
 jinja2
 faiss-gpu
-langchain
+langchain[openai]
 python-dotenv
 tenacity
 sentence-transformers

@@ -1,0 +1,13 @@
+{
+    "input_file": "path/to/your/input_file.json",
+    "output_dir": "path/to/output_directory",
+    "encoder_model": "BAAI/bge-large-en-v1.5",
+    "encoder_type": "bge",
+    "query_instruction": "Represent the semantic meaning of the final user query and its reworded standalone version as a single, combined representation to capture their intent and context for similarity search with other query pairs.",
+    "num_clusters": null,
+    "template": "custom_jinja_template: {{ item.input }}",
+    "retry_attempts": 3,
+    "retry_delay": 10,
+    "seed": 42
+  }
+  

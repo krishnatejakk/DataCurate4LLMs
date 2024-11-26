@@ -1,0 +1,13 @@
+{
+    "input_file": "/xuk/kk-subset-selection/subset_selection_and_analysis/data/query_rewrite/query_expand_outputs_v2.json",
+    "output_dir": "/xuk/kk-subset-selection/subset_selection_and_analysis/data/query_rewrite/output",
+    "encoder_model": "nvidia/NV-Embed-v2",
+    "encoder_type": "nvembed",
+    "query_instruction": "Represent the transformation from the Original Query to the Standalone Version. Focus on how the Original Query has been rephrased or expanded to create the Standalone Version. Similar transformations should have similar embeddings.",
+    "num_clusters": null,
+    "template": "Original Query: {{ item.input[-1].text }}\nStandalone Version: {{ item.output['reworded version'] }}",
+    "retry_attempts": 3,
+    "retry_delay": 10,
+    "seed": 42
+  }
+  

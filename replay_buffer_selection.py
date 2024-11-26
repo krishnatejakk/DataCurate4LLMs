@@ -11,7 +11,10 @@ from datasets import load_dataset, concatenate_datasets
 from dataclasses import dataclass
 from typing import List, Dict, Any, Tuple, Optional, Union
 from src.encoders.bge_unified_encoder import UnifiedBGEEncoder
+from src.encoders.gte_qwen2_instruct_encoder import Qwen2EmbedEncoder
+from src.encoders.nvembed_encoder import NVEmbedEncoder
 from src.encoders.openai_encoder import OpenAIEncoder
+from src.encoders.sfr_mistral_encoder import SFRMistralEncoder
 from submodlib import FacilityLocationFunction
 from multiprocessing import Pool, set_start_method
 from src.utils.compute_pairwise_similarity import compute_pairwise_dense
@@ -46,8 +49,9 @@ class ProcessingConfig:
     retry_delay: int = 30
     output_dir: str = 'output'
     template_name: str = 'conversation'
-    combine_files: bool = False  # New parameter to control file combination
-    encoder_type: str = 'bge'
+    combine_files: bool = False  # New parameter to control file combination , if True, combine all input files before selectig a subset from combined file, otherwise select a subset from each file separately
+    encoder_type: str = 'bge' # Encoder Family
+    encoder_model: str = 'BAAI/bge-m3' # Encoder Model
 
 def retry_on_exception(func):
     """
@@ -83,7 +87,7 @@ class DataProcessor:
             encoder_cls: The encoder class to use for generating embeddings.
         """
         self.config = config
-        self.encoder = encoder_cls()
+        self.encoder = encoder_cls(model_name = config.encoder_model)
         self.env = Environment(loader=BaseLoader())
         self.templates = {k: self.env.from_string(v) for k, v in config.templates.items()}
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -739,6 +743,12 @@ def main():
             processor = DataProcessor(config, UnifiedBGEEncoder)
         elif config.encoder_type == "openai":
             processor = DataProcessor(config, OpenAIEncoder)
+        elif config.encoder_type == "sfr_mistral":
+            processor = DataProcessor(config, SFRMistralEncoder)
+        elif config.encoder_type == "nvembed":
+            processor = DataProcessor(config, NVEmbedEncoder)
+        elif config.encoder_type == "qwen2":
+            processor = DataProcessor(config, Qwen2EmbedEncoder)
         else:
             raise ValueError(f"Unknown encoder type: {config.encoder_type}")
 
