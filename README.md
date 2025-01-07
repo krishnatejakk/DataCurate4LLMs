@@ -1,4 +1,4 @@
-# Subset Selection for Language Models
+# Data Curation for Language Models
 
 This repository contains code for selecting representative subsets from large datasets, which can be used as replay buffers, representative subsets for efficient and effective fine-tuning of language models. Selected data subsets also give us an idea of data redundancy, and more. We also provide the code to cluster the data where the optimal number of clusters are automatically determined along with diversity analysis metrics to analyze the diversity of the data. The goal is to enable efficient training by reducing dataset size without significant loss of information, leveraging advanced embedding techniques and submodular optimization.
 
