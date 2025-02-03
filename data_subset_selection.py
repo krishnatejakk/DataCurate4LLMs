@@ -413,7 +413,8 @@ class DataProcessor:
         """
         indices = np.arange(len(embeddings))
         np.random.shuffle(indices)
-        
+        logger.info(f"Loaded {len(embeddings)} embeddings for dataset {dataset_name}")
+        logger.info(f"Embeddings at top-5 Indices: {embeddings[:5]}")
         fold_size = len(embeddings) // self.config.num_folds
         remainder = len(embeddings) % self.config.num_folds
 
@@ -715,15 +716,18 @@ def main():
 
         # Parse subset sizes from command line arguments
         if args.subset_sizes:
-            subset_sizes = []
-            for size in args.subset_sizes:
-                if size.endswith('%'):
-                    # Convert percentage string to float
-                    subset_sizes.append(float(size[:-1]))
-                else:
-                    # Convert absolute number string to int
-                    subset_sizes.append(int(size))
-            config_dict['subset_sizes'] = subset_sizes
+            config_dict['subset_sizes'] = args.subset_sizes
+        
+        # Convert percentage strings to floats and absolute numbers to ints
+        subset_sizes = []
+        for size in config_dict.get('subset_sizes', []):
+            if size.endswith('%'):
+                # Convert percentage string to float
+                subset_sizes.append(float(size[:-1]))
+            else:
+                # Convert absolute number string to int
+                subset_sizes.append(int(size))
+        config_dict['subset_sizes'] = subset_sizes
 
         config = ProcessingConfig(**config_dict)
         

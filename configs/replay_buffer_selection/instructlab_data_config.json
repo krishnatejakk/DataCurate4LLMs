@@ -5,11 +5,11 @@
       "message": "{% for msg in messages if msg.role != 'system' %}{{ msg.role }}: {{ msg.content }}\n{% endfor %}"
     },
     "batch_size": 100000,
-    "num_folds": 50,
-    "subset_sizes": ["50000"],
+    "num_folds": 16,
+    "subset_sizes": ["20%"],
     "seed": 42,
     "template_name": "message",
-    "combine_files": true,
-    "encoder_type": "openai",
-    "encoder_model": "text-embedding-3-large"
+    "combine_files": false,
+    "encoder_type": "nvembed",
+    "encoder_model": "nvidia/NV-Embed-v2"
   }

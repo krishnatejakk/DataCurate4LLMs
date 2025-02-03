@@ -15,9 +15,9 @@ class NVEmbedEncoder():
         self,
         model_name: str = 'nvidia/NV-Embed-v2',
         device: Optional[torch.device] = None,
-        batch_size: int = 26,
+        batch_size: int = 8,
         max_length: int = 4096,
-        use_fp16: bool = False
+        use_fp16: bool = True
     ):
         # Initialize base class without DataParallel (we'll apply it only to embedding_model)
         self.device = device or torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -26,7 +26,7 @@ class NVEmbedEncoder():
         
         # Load model and tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        # self.tokenizer.padding_side = "right"
+        self.tokenizer.padding_side = "right"
         self.model = AutoModel.from_pretrained(model_name, trust_remote_code=True)
         
         # Apply fp16 if requested
@@ -47,7 +47,7 @@ class NVEmbedEncoder():
 
     def get_detailed_instruct(self, task_description: str, query_description: str, query: str) -> str:
         return f'Instruct: {task_description}\n{query_description}: {query}{self.tokenizer.eos_token}'
-    
+
     def encode(
         self,
         inputs: List[str],
