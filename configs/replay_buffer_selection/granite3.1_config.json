@@ -1,0 +1,16 @@
+{
+    "instruction": "Generate embeddings that capture the core meaning of user-assistant conversations across multiple domains, ensuring generalization and suitability for clustering based on semantic similarity.",
+    "query_description": "Conversation",
+    "templates": {
+      "message": "{% for msg in messages if msg.role != 'system' %}{{ msg.role }}: {{ msg.content }}\n{% endfor %}",
+      "conversation": "{% for conv in conversation %}{{ conv.from }}: {{ conv.value }}\n{% endfor %}"
+    },
+    "batch_size": 100000,
+    "num_folds": 25,
+    "subset_sizes": ["1%", "5%", "10%", "25%", "50%"],
+    "seed": 42,
+    "template_name": "conversation",
+    "combine_files": false,
+    "encoder_type": "nvembed",
+    "encoder_model": "nvidia/NV-Embed-v2"
+  }
