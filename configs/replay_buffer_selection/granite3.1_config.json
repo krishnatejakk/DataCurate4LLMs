@@ -1,6 +1,6 @@
 {
-    "instruction": "Generate embeddings that capture the core meaning of user-assistant conversations across multiple domains, ensuring generalization and suitability for clustering based on semantic similarity.",
-    "query_description": "Conversation",
+    "instruction": "conversation",
+    "query_description": "conversation",
     "templates": {
       "message": "{% for msg in messages if msg.role != 'system' %}{{ msg.role }}: {{ msg.content }}\n{% endfor %}",
       "conversation": "{% for conv in conversation %}{{ conv.from }}: {{ conv.value }}\n{% endfor %}"
@@ -11,6 +11,6 @@
     "seed": 42,
     "template_name": "conversation",
     "combine_files": false,
-    "encoder_type": "nvembed",
-    "encoder_model": "nvidia/NV-Embed-v2"
+    "encoder_type": "arctic",
+    "encoder_model": "Snowflake/snowflake-arctic-embed-l-v2.0"
   }
