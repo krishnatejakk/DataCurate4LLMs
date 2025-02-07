@@ -14,7 +14,7 @@ class ArcticEmbedEncoder:
     def __init__(
         self,
         model_name: str = 'Snowflake/snowflake-arctic-embed-l-v2.0',
-        batch_size: int = 32,
+        batch_size: int = 192,
         max_length: int = 4096,
         use_fp16: bool = False,
         device: Optional[torch.device] = None   # NEW parameter
