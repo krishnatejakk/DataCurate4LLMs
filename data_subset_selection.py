@@ -98,6 +98,7 @@ class DataProcessor:
         # Use LOCAL_RANK for device assignment.
         self.local_rank = int(os.environ.get("LOCAL_RANK", self.rank))
         self.device = torch.device(f"cuda:{self.local_rank}")
+        torch.cuda.set_device(self.local_rank)
 
         # Initialize encoder on the proper device.
         self.encoder = encoder_cls(
