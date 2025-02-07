@@ -264,72 +264,107 @@ class DataProcessor:
             h5f_merged.create_dataset('indices', data=all_indices, dtype='int64')
         logger.info(f"Merged embeddings saved to {merged_path}")
 
+    def _load_or_create_folds(self, total_samples, num_folds, folds_file):
+        """
+        Load stored folds from a file if they exist; otherwise, create the folds
+        deterministically and save them.
+        """
+        if os.path.exists(folds_file):
+            logger.info(f"Loading stored folds from {folds_file}")
+            loaded = np.load(folds_file)
+            folds = [loaded[f"fold_{i}"] for i in range(num_folds)]
+            return folds
+        else:
+            fold_size = total_samples // num_folds
+            folds = []
+            start_idx = 0
+            for i in range(num_folds):
+                extra = 1 if i < total_samples % num_folds else 0
+                end_idx = start_idx + fold_size + extra
+                folds.append(np.arange(start_idx, end_idx))
+                start_idx = end_idx
+            # Save the folds so that subsequent runs use the same fold splits.
+            fold_dict = {f"fold_{i}": folds[i] for i in range(num_folds)}
+            np.savez(folds_file, **fold_dict)
+            logger.info(f"Stored folds to {folds_file}")
+            return folds
+
     def select_subsets_ddp(self, dataset_name: str, embeddings: torch.Tensor) -> dict:
         """
         Distributed subset selection over a fixed number of folds.
         Each process computes selections for the folds assigned to it.
+        The fold splits and per‑fold results are stored to allow resuming.
         Then, results are gathered from all ranks and merged on rank 0.
         """
         num_folds = self.config.num_folds
         total_samples = embeddings.shape[0]
-        fold_size = total_samples // num_folds
-        folds = []
-        start_idx = 0
-        for i in range(num_folds):
-            extra = 1 if i < total_samples % num_folds else 0
-            end_idx = start_idx + fold_size + extra
-            folds.append(np.arange(start_idx, end_idx))
-            start_idx = end_idx
 
-        # Each process is assigned folds by round-robin.
+        # Create a folder for storing fold splits and results.
+        folds_dir = os.path.join(self.config.output_dir, dataset_name, "folds")
+        os.makedirs(folds_dir, exist_ok=True)
+        folds_file = os.path.join(folds_dir, "folds.npz")
+        folds = self._load_or_create_folds(total_samples, num_folds, folds_file)
+
         local_results = []
+        # Process folds assigned to this rank (using round-robin assignment)
         for fold_idx, fold_indices in enumerate(folds):
             if fold_idx % self.world_size != self.rank:
                 continue  # Skip folds not assigned to this rank.
-            logger.info(f"Rank {self.rank} processing fold {fold_idx+1}/{num_folds}")
-            fold_embeddings = embeddings[fold_indices].to(self.device)
-            # Compute similarity matrix (tune batch_size and scaling as needed).
-            sim_mat = compute_pairwise_dense(
-                fold_embeddings,
-                batch_size=50000,
-                metric='cosine',
-                device=self.device,
-                scaling="additive"
-            )
-            sim_mat = sim_mat.cpu().numpy()
-            # For each subset size in the configuration, compute a subset.
-            fold_result = {}
-            for size_spec in self.config.subset_sizes:
-                if isinstance(size_spec, float):
-                    # Percentage: convert to absolute budget.
-                    budget = max(1, math.ceil((size_spec / 100.0) * len(fold_indices)))
-                else:
-                    # For absolute numbers, we may scale by fold size relative to total.
-                    budget = max(1, math.ceil(size_spec * (len(fold_indices) / total_samples)))
-                logger.info(f"Rank {self.rank} fold {fold_idx+1}: selecting budget {budget}")
-                ds_func = FacilityLocationFunction(
-                    n=sim_mat.shape[0],
-                    sijs=sim_mat,
-                    mode="dense",
-                    separate_rep=False
+            # Define a file to store the fold’s selection result.
+            fold_result_file = os.path.join(folds_dir, f"fold_{fold_idx}_selection.npz")
+            if os.path.exists(fold_result_file):
+                # Resume from stored fold result.
+                loaded = np.load(fold_result_file, allow_pickle=True)
+                fold_result = loaded['fold_result'].item()  # stored as a dict
+                logger.info(f"Rank {self.rank} loaded precomputed selection for fold {fold_idx}")
+            else:
+                logger.info(f"Rank {self.rank} processing fold {fold_idx+1}/{num_folds}")
+                fold_embeddings = embeddings[fold_indices].to(self.device)
+                # Compute similarity matrix (tune batch_size and scaling as needed).
+                sim_mat = compute_pairwise_dense(
+                    fold_embeddings,
+                    batch_size=50000,
+                    metric='cosine',
+                    device=self.device,
+                    scaling="additive"
                 )
-                subset_result = ds_func.maximize(
-                    budget=budget,
-                    optimizer="LazierThanLazyGreedy",
-                    epsilon=160,
-                    stopIfZeroGain=False,
-                    stopIfNegativeGain=False,
-                    verbose=False
-                )
-                # Map local fold indices back to global indices.
-                subset_indices = [fold_indices[x[0]] for x in subset_result]
-                subset_gains = [x[1] for x in subset_result]
-                fold_result[size_spec] = {"indices": subset_indices, "gains": subset_gains}
+                sim_mat = sim_mat.cpu().numpy()
+                # For each subset size in the configuration, compute a subset.
+                fold_result = {}
+                for size_spec in self.config.subset_sizes:
+                    if isinstance(size_spec, float):
+                        # Percentage: convert to absolute budget.
+                        budget = max(1, math.ceil((size_spec / 100.0) * len(fold_indices)))
+                    else:
+                        # For absolute numbers, scale by fold size relative to total.
+                        budget = max(1, math.ceil(size_spec * (len(fold_indices) / total_samples)))
+                    logger.info(f"Rank {self.rank} fold {fold_idx+1}: selecting budget {budget}")
+                    ds_func = FacilityLocationFunction(
+                        n=sim_mat.shape[0],
+                        sijs=sim_mat,
+                        mode="dense",
+                        separate_rep=False
+                    )
+                    subset_result = ds_func.maximize(
+                        budget=budget,
+                        optimizer="LazierThanLazyGreedy",
+                        epsilon=160,
+                        stopIfZeroGain=False,
+                        stopIfNegativeGain=False,
+                        verbose=False
+                    )
+                    # Map local fold indices back to global indices.
+                    subset_indices = [fold_indices[x[0]] for x in subset_result]
+                    subset_gains = [x[1] for x in subset_result]
+                    fold_result[size_spec] = {"indices": subset_indices, "gains": subset_gains}
+                # Save the computed fold result for resuming.
+                np.savez(fold_result_file, fold_result=fold_result)
+                logger.info(f"Rank {self.rank} saved fold {fold_idx} selection to {fold_result_file}")
+                # Cleanup for the fold.
+                del sim_mat, fold_embeddings
+                gc.collect()
+                torch.cuda.empty_cache()
             local_results.append((fold_idx, fold_result))
-            # Cleanup for the fold.
-            del sim_mat, fold_embeddings
-            gc.collect()
-            torch.cuda.empty_cache()
 
         # Gather results from all ranks.
         gathered_results = [None for _ in range(self.world_size)]
@@ -342,6 +377,7 @@ class DataProcessor:
             if rank_result is not None:
                 all_results.extend(rank_result)
 
+        # Combine results from all folds for each subset size.
         combined_subsets = {size: {"indices": [], "gains": []} for size in self.config.subset_sizes}
         for fold_idx, fold_result in all_results:
             for size in self.config.subset_sizes:
