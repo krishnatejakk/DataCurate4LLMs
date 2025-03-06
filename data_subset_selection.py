@@ -18,11 +18,9 @@ import torch.distributed as dist
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data.distributed import DistributedSampler
 from jinja2 import Environment, BaseLoader
-
-# Import your encoder – here we use ArcticEmbedEncoder.
-from src.encoders.arctic_encoder import ArcticEmbedEncoder
+import datetime
+from filelock import FileLock
 # (Import other encoder classes as needed.)
-
 # Import your submodular function modules
 from submodlib import FacilityLocationFunction
 from src.utils.compute_pairwise_similarity import compute_pairwise_dense
@@ -147,10 +145,13 @@ class DataProcessor:
         """
         os.makedirs(output_dir, exist_ok=True)
         merged_path = os.path.join(output_dir, 'embeddings.h5')
-        
-        # Only rank 0 checks if merged file exists.
-        if os.path.exists(merged_path):
-            logger.info(f"Embeddings file already exists in {output_dir}, skipping generation")
+        lock_file = os.path.join(output_dir, 'embedding_generation_done.lock')
+
+        # If a lock file exists, assume the generation is complete and skip processing.
+        if os.path.exists(lock_file):
+            logger.info(f"Rank {self.rank}: Lock file found in {output_dir}, skipping embedding generation.")
+            # Wait for all processes to reach this point.
+            dist.barrier()
             return merged_path
 
         # Partition the dataset using a DistributedSampler.
@@ -158,7 +159,7 @@ class DataProcessor:
             dataset,
             num_replicas=self.world_size,
             rank=self.rank,
-            shuffle=False
+            shuffle=False,
         )
         sampler_indices = list(sampler)
         total_samples = len(sampler_indices)
@@ -200,27 +201,28 @@ class DataProcessor:
 
         pbar.close()
         # Synchronize all processes.
-        dist.barrier(device_ids=[self.local_rank])
+        logger.info(f"Rank {self.rank} waiting at barrier (pre-embedding merge)")
+        torch.cuda.synchronize(self.device)  # Ensure all CUDA work is finished
+        dist.barrier()  # Barrier with NCCL using the correct device
+        logger.info(f"Rank {self.rank} passed barrier")
         if self.rank == 0:
             self._merge_distributed_embeddings(output_dir, merged_path)
-        dist.barrier(device_ids=[self.local_rank])
+        logger.info(f"Rank {self.rank} waiting at barrier (post-embedding merge)")
+        torch.cuda.synchronize(self.device)
+        dist.barrier()
+        logger.info(f"Rank {self.rank} passed barrier")
         return merged_path
 
     def _process_distributed_batch(self, batch_texts, batch_indices, output_dir):
-        """
-        Process one batch of texts, generate embeddings and store them along with
-        their original indices.
-        """
         embeddings = self.encoder.encode(batch_texts, self.config.instruction)
         if isinstance(embeddings, torch.Tensor):
             emb_np = embeddings.cpu().numpy()
         else:
             emb_np = embeddings
-        # Ensure that the number of embeddings matches the number of indices.
         if emb_np.shape[0] != len(batch_indices):
             raise ValueError("Mismatch between embeddings and indices counts")
-        # Name the file with rank and current timestamp (you could also include a batch number).
-        batch_file = os.path.join(output_dir, f'batch_rank{self.rank}_{int(time.time())}.h5')
+        # Use nanosecond resolution for uniqueness (or use a UUID if preferred)
+        batch_file = os.path.join(output_dir, f'batch_rank{self.rank}_{time.time_ns()}.h5')
         with h5py.File(batch_file, 'w') as h5f:
             h5f.create_dataset('embeddings', data=emb_np, dtype='float32')
             h5f.create_dataset('indices', data=np.array(batch_indices), dtype='int64')
@@ -230,7 +232,8 @@ class DataProcessor:
         """
         Merge all batch files (from all ranks) into a single HDF5 file.
         The merged file is sorted by the original dataset indices so that the embeddings
-        are stored in the same order as the input.
+        are stored in the same order as the input. Duplicate indices (from DDP padding)
+        are removed.
         """
         all_files = []
         for r in range(self.world_size):
@@ -242,32 +245,68 @@ class DataProcessor:
             return
 
         # Gather indices and embeddings from all batch files.
-        all_indices = []
-        all_embeddings = []
+        all_indices_list = []
+        all_embeddings_list = []
         for fname in all_files:
             with h5py.File(fname, 'r') as f:
+                if 'indices' not in f or 'embeddings' not in f:
+                    logger.warning(f"Skipping corrupted or incomplete file: {fname}")
+                    continue
                 indices = f['indices'][:]
                 embeddings = f['embeddings'][:]
-                all_indices.append(indices)
-                all_embeddings.append(embeddings)
-            os.remove(fname)
-            logger.info(f"Processed and removed {fname}")
+                if indices.size == 0 or embeddings.size == 0:
+                    logger.warning(f"Skipping empty file: {fname}")
+                    continue
+                all_indices_list.append(indices)
+                all_embeddings_list.append(embeddings)
 
-        all_indices = np.concatenate(all_indices)
-        all_embeddings = np.concatenate(all_embeddings)
-        # Sort the arrays by the original indices.
-        sort_order = np.argsort(all_indices)
-        all_indices = all_indices[sort_order]
-        all_embeddings = all_embeddings[sort_order]
-        total_samples = all_embeddings.shape[0]
-        emb_dim = all_embeddings.shape[1]
+        all_indices = np.concatenate(all_indices_list)
+        all_embeddings = np.concatenate(all_embeddings_list)
 
-        logger.info(f"Merging {total_samples} samples with embedding dimension {emb_dim}")
+        # Handle duplicate indices by averaging embeddings
+        from collections import defaultdict
+        index_to_embeddings = defaultdict(list)
+        for idx, emb in zip(all_indices, all_embeddings):
+            index_to_embeddings[idx].append(emb)
+
+        unique_indices = []
+        unique_embeddings = []
+        for idx, emb_list in index_to_embeddings.items():
+            unique_indices.append(idx)
+            unique_embeddings.append(np.mean(emb_list, axis=0))  # or np.sum(emb_list, axis=0)
+
+        unique_indices = np.array(unique_indices)
+        unique_embeddings = np.array(unique_embeddings)
+
+        # Sort the unique indices and embeddings
+        sort_order = np.argsort(unique_indices)
+        sorted_indices = unique_indices[sort_order]
+        sorted_embeddings = unique_embeddings[sort_order]
+
+        # Validate alignment
+        assert len(sorted_indices) == len(sorted_embeddings), "Mismatch between sorted indices and embeddings"
+
+        total_samples = sorted_embeddings.shape[0]
+        emb_dim = sorted_embeddings.shape[1]
+
+        logger.info(f"Merging {total_samples} unique samples with embedding dimension {emb_dim}")
 
         with h5py.File(merged_path, 'w') as h5f_merged:
-            h5f_merged.create_dataset('embeddings', data=all_embeddings, dtype='float32')
-            h5f_merged.create_dataset('indices', data=all_indices, dtype='int64')
+            h5f_merged.create_dataset('embeddings', data=sorted_embeddings, dtype='float32')
+            h5f_merged.create_dataset('indices', data=sorted_indices, dtype='int64')
         logger.info(f"Merged embeddings saved to {merged_path}")
+        
+        # Write a lock/marker file indicating that embedding generation is complete.
+        lock_file = os.path.join(output_dir, 'embedding_generation_done.lock')
+        with open(lock_file, 'w') as f:
+            f.write('done')
+        logger.info(f"Lock file created at {lock_file}")
+       
+        # Delete batch files only after successful merge
+        # for fname in all_files:
+        #     os.remove(fname)
+        #     logger.info(f"Removed batch file: {fname}")
+            
 
     def _load_or_create_folds(self, total_samples, num_folds, folds_file):
         """
@@ -302,7 +341,7 @@ class DataProcessor:
         Then, results are gathered from all ranks and merged on rank 0.
         """
         total_samples = embeddings.shape[0]
-
+        logger.info(f"Rank {self.rank} starting subset selection for {dataset_name} with {total_samples} samples")
         # If num_folds is -1, determine it based on dataset size.
         if self.config.num_folds == -1:
             num_folds = math.ceil(total_samples / 50000)
@@ -310,12 +349,24 @@ class DataProcessor:
             num_folds = self.config.num_folds
         logger.info(f"Rank {self.rank} using {num_folds} folds for subset selection")
 
-        # Create a folder for storing fold splits and results.
+        # Define the folds directory and file paths.
         folds_dir = os.path.join(self.config.output_dir, dataset_name, "folds")
         os.makedirs(folds_dir, exist_ok=True)
         folds_file = os.path.join(folds_dir, "folds.npz")
-        folds = self._load_or_create_folds(total_samples, num_folds, folds_file)
+        lock_file = folds_file + ".lock"  # This will be our lock file.
 
+        if self.rank == 0:
+            with FileLock(lock_file):
+                folds = self._load_or_create_folds(total_samples, num_folds, folds_file)
+        # At this point, rank 0 has released the lock, and others can acquire it if needed.
+        dist.barrier()  # Synchronize all processes now that the file operation is complete.
+        if self.rank != 0:
+            loaded = np.load(folds_file)
+            folds = [loaded[f"fold_{i}"] for i in range(num_folds)]
+        
+        torch.cuda.synchronize(self.device)
+        dist.barrier()  # Ensure all ranks are synchronized before proceeding
+        logger.info(f"Rank {self.rank} passed barrier (folds loaded)")
         local_results = []
         # Process folds assigned to this rank (using round-robin assignment)
         for fold_idx, fold_indices in enumerate(folds):
@@ -376,7 +427,11 @@ class DataProcessor:
                 gc.collect()
                 torch.cuda.empty_cache()
             local_results.append((fold_idx, fold_result))
-
+        # Synchronize all ranks before gathering results.
+        logger.info(f"Rank {self.rank} waiting at barrier (post-subset selection)")
+        torch.cuda.synchronize(self.device)
+        dist.barrier()
+        logger.info(f"Rank {self.rank} passed barrier")
         # Gather results from all ranks.
         gathered_results = [None for _ in range(self.world_size)]
         dist.all_gather_object(gathered_results, local_results)
@@ -422,41 +477,76 @@ class DataProcessor:
 
             logger.info(f"Saved metadata to {metadata_file}")
             subsets[size_spec] = sorted_indices
-
         return subsets
 
-    def process_files(self, input_files: list, output_dir: str):
-        """
-        Process input files: load dataset, generate embeddings,
-        perform distributed subset selection, and save selected subsets.
-        """
+    @retry_on_exception
+    def generate_embeddings_from_files(self, input_files: list, output_dir: str):
+        if self.config.combine_files:
+            logger.info("Combining datasets...")
+            from datasets import load_dataset, concatenate_datasets
+            datasets = []
+            for infile in input_files:
+                file_extension = infile.split('.')[-1]
+                if file_extension == 'jsonl':
+                    file_extension = 'json'
+                ds = load_dataset(file_extension, data_files=infile, split='train')
+                datasets.append(ds)
+            dataset = concatenate_datasets(datasets)
+            dataset_name = "combined_dataset"
+            # Generate embeddings (with resume functionality).
+            emb_dir = os.path.join(output_dir, dataset_name, "embeddings")
+            emb_file = self.generate_embeddings(dataset, emb_dir)
+        else:
+            from datasets import load_dataset
+            for infile in input_files:
+                file_extension = infile.split('.')[-1]
+                if file_extension == 'jsonl':
+                    file_extension = 'json'
+                dataset = load_dataset(file_extension, data_files=infile, split='train')
+                dataset_name = os.path.splitext(os.path.basename(infile))[0]
+                
+                # Generate embeddings (with resume functionality)
+                emb_dir = os.path.join(output_dir, dataset_name, "embeddings")
+                emb_file = self.generate_embeddings(dataset, emb_dir)
+        return None
+    
+    def select_subsets_from_files(self, input_files: list, output_dir: str):
         try:
             if self.config.combine_files:
-                logger.info("Processing combined datasets...")
+                logger.info("Combining datasets...")
                 from datasets import load_dataset, concatenate_datasets
                 datasets = []
                 for infile in input_files:
-                    file_extension = infile.split('.')[-1]
-                    if file_extension == 'jsonl':
-                        file_extension = 'json'
-                    ds = load_dataset(file_extension, data_files=infile, split='train')
+                    ext = infile.split('.')[-1]
+                    if ext == 'jsonl':
+                        ext = 'json'
+                    ds = load_dataset(ext, data_files=infile, split='train')
                     datasets.append(ds)
                 dataset = concatenate_datasets(datasets)
                 dataset_name = "combined_dataset"
-                # Generate embeddings (with resume functionality).
-                emb_dir = os.path.join(output_dir, dataset_name, "embeddings")
-                emb_file = self.generate_embeddings(dataset, emb_dir)
+
                 # Load embeddings.
+                emb_dir = os.path.join(output_dir, dataset_name, "embeddings")
+                emb_file = os.path.join(emb_dir, 'embeddings.h5')
+                if not os.path.exists(emb_file):
+                    logger.error(f"Embeddings file {emb_file} not found. Please generate embeddings before subset selection.")
+                    return
                 with h5py.File(emb_file, 'r') as f:
                     embeddings_data = f['embeddings'][:]
                     if embeddings_data.size == 0:
                         logger.warning(f"No embeddings generated for dataset {dataset_name}, skipping subset selection")
                         return
                     embeddings = torch.tensor(embeddings_data, dtype=torch.float32)
+                
                 # Perform distributed subset selection.
                 subsets = self.select_subsets_ddp(dataset_name, embeddings)
+                logger.info(f"Rank {self.rank} waiting at saving barrier for getting ready to save")
+                torch.cuda.synchronize(self.device)
+                dist.barrier()  # Ensure all ranks are ready for saving phase
+                logger.info(f"Rank {self.rank} passed pre-saving barrier")
                 logger.info("Subset selection complete.")
-                # For each subset size, save the corresponding subset.
+                
+                # Save subsets (only rank 0)
                 if self.rank == 0:
                     for size_spec, indices in subsets.items():
                         subset_data = dataset.select(indices)
@@ -465,6 +555,12 @@ class DataProcessor:
                         output_file = os.path.join(output_dir, dataset_name, f"{subset_name}.{ext}")
                         self._save_subset(subset_data, output_file, ext)
                         logger.info(f"Saved subset with {len(indices)} samples to {output_file}")
+                
+                logger.info(f"Rank {self.rank} waiting for saving to finish")
+                torch.cuda.synchronize(self.device)
+                dist.barrier()  # Ensure all ranks are ready for saving phase
+                logger.info(f"Rank {self.rank} passed post-saving barrier")
+                # Cleanup between files
                 gc.collect()
                 torch.cuda.empty_cache()
             else:
@@ -475,21 +571,25 @@ class DataProcessor:
                         file_extension = 'json'
                     dataset = load_dataset(file_extension, data_files=infile, split='train')
                     dataset_name = os.path.splitext(os.path.basename(infile))[0]
-                    
-                    # Generate embeddings (with resume functionality)
-                    emb_dir = os.path.join(output_dir, dataset_name, "embeddings")
-                    emb_file = self.generate_embeddings(dataset, emb_dir)
-                    
                     # Load embeddings.
+                    emb_dir = os.path.join(output_dir, dataset_name, "embeddings")
+                    emb_file = os.path.join(emb_dir, 'embeddings.h5')
+                    if not os.path.exists(emb_file):
+                        logger.error(f"Embeddings file {emb_file} not found for dataset {dataset_name}. Please generate embeddings before subset selection.")
+                        return
                     with h5py.File(emb_file, 'r') as f:
                         embeddings_data = f['embeddings'][:]
                         if embeddings_data.size == 0:
                             logger.warning(f"No embeddings generated for dataset {dataset_name}, skipping subset selection")
-                            continue
+                            return
                         embeddings = torch.tensor(embeddings_data, dtype=torch.float32)
                     
                     # Perform distributed subset selection.
                     subsets = self.select_subsets_ddp(dataset_name, embeddings)
+                    logger.info(f"Rank {self.rank} waiting at saving barrier for getting ready to save")
+                    torch.cuda.synchronize(self.device)
+                    dist.barrier()  # Ensure all ranks are ready for saving phase
+                    logger.info(f"Rank {self.rank} passed pre-saving barrier")
                     logger.info("Subset selection complete.")
                     
                     # Save subsets (only rank 0)
@@ -501,17 +601,17 @@ class DataProcessor:
                             output_file = os.path.join(output_dir, dataset_name, f"{subset_name}.{ext}")
                             self._save_subset(subset_data, output_file, ext)
                             logger.info(f"Saved subset with {len(indices)} samples to {output_file}")
-                    
+                    logger.info(f"Rank {self.rank} waiting for saving to finish")
+                    torch.cuda.synchronize(self.device)
+                    dist.barrier()  # Ensure all ranks are ready for saving phase
+                    logger.info(f"Rank {self.rank} passed saving barrier")
                     # Cleanup between files
                     gc.collect()
                     torch.cuda.empty_cache()
-
-            
-            
         except Exception as e:
             logger.error(f"Error processing files: {str(e)}")
-            raise
-
+            raise 
+            
     def _save_subset(self, subset_data, output_file: str, extension: str):
         if extension in ['json', 'jsonl']:
             subset_data.to_json(output_file, orient='records', lines=True)
@@ -522,61 +622,122 @@ class DataProcessor:
 
 
 def main():
-    """
-    Main entry point. Initializes distributed processing, loads config,
-    and runs the processor.
-    """
-    # Get local rank before initializing the process group
-    local_rank = int(os.environ.get("LOCAL_RANK", 0))
-    torch.cuda.set_device(local_rank)
+    # Set up subparsers for two commands: embedding generation and subset selection.
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest="command", help="Choose a command to run: 'embed' for embedding generation, 'subset' for subset selection.")
     
-    # Initialize distributed processing.
-    dist.init_process_group(backend="nccl", init_method="env://", device_id=local_rank)
-    rank = dist.get_rank()
-    try:
-        parser = argparse.ArgumentParser(
-            description='Enhanced Data Processing with DDP Subset Selection and Resume Capability'
+    # Subparser for embedding generation.
+    embed_parser = subparsers.add_parser("embed", help="Generate embeddings from input files.")
+    embed_parser.add_argument('--input_files', nargs='+', required=True)
+    embed_parser.add_argument('--output_dir', required=True)
+    embed_parser.add_argument('--config', required=True)
+    
+    # Subparser for subset selection.
+    subset_parser = subparsers.add_parser("subset", help="Select subsets from existing embeddings.")
+    subset_parser.add_argument('--input_files', nargs='+', required=True)
+    subset_parser.add_argument('--output_dir', required=True)
+    subset_parser.add_argument('--config', required=True)
+    
+    args = parser.parse_args()
+    if args.command is None:
+        parser.print_help()
+        return
+
+    with open(args.config) as f:
+        config_dict = json.load(f)
+
+    # Process subset sizes from the config.
+    subset_sizes = []
+    for size in config_dict.get('subset_sizes', []):
+        if isinstance(size, str) and size.endswith('%'):
+            subset_sizes.append(float(size[:-1]))
+        else:
+            subset_sizes.append(int(size))
+    config_dict['subset_sizes'] = subset_sizes
+
+    config = ProcessingConfig(**config_dict)
+    config.num_gpus = int(os.environ.get("WORLD_SIZE", 1))
+    config.output_dir = args.output_dir
+
+    # Set local_rank in main using environment variable.
+    local_rank = int(os.environ.get("LOCAL_RANK", 0))
+    
+    if args.command == "embed":
+        # Phase 1: Embedding Generation with NCCL
+        dist.init_process_group(
+            backend="nccl",
+            init_method="env://",
+            timeout=datetime.timedelta(seconds=36000)
         )
-        parser.add_argument('--input_files', nargs='+', required=True,
-                            help='List of input files to process')
-        parser.add_argument('--output_dir', required=True,
-                            help='Directory to save output files')
-        parser.add_argument('--config', required=True,
-                            help='Path to config JSON file')
-        # Use parse_known_args() to ignore extra arguments.
-        args, unknown = parser.parse_known_args()
-
-        with open(args.config) as f:
-            config_dict = json.load(f)
-        # Process subset_sizes: if percentages (ending with %), convert to float.
-        subset_sizes = []
-        for size in config_dict.get('subset_sizes', []):
-            if isinstance(size, str) and size.endswith('%'):
-                subset_sizes.append(float(size[:-1]))
-            else:
-                subset_sizes.append(int(size))
-        config_dict['subset_sizes'] = subset_sizes
-
-        from dataclasses import dataclass
-        config = ProcessingConfig(**config_dict)
-        config.num_gpus = int(os.environ.get("WORLD_SIZE", 1))
-        config.output_dir = args.output_dir
-
-        logger.info(f"Processing configuration: {config}")
-
-        # For demonstration, we choose the Arctic encoder.
-        processor = DataProcessor(config, ArcticEmbedEncoder)
-        processor.process_files(args.input_files, args.output_dir)
-
-        # --- Final synchronization before shutdown ---
-        dist.barrier(device_ids=[local_rank])
-        torch.cuda.synchronize()
-
-    finally:
         try:
+            if config.encoder_type == "bge":
+                from src.encoders.bge_unified_encoder import UnifiedBGEEncoder
+                processor = DataProcessor(config, UnifiedBGEEncoder)
+            elif config.encoder_type == "openai":
+                from src.encoders.openai_encoder import OpenAIEncoder
+                processor = DataProcessor(config, OpenAIEncoder)
+            elif config.encoder_type == "sfr_mistral":
+                from src.encoders.sfr_mistral_encoder import SFRMistralEncoder
+                processor = DataProcessor(config, SFRMistralEncoder)
+            elif config.encoder_type == "nvembed":
+                from src.encoders.nvembed_encoder import NVEmbedEncoder
+                processor = DataProcessor(config, NVEmbedEncoder)
+            elif config.encoder_type == "arctic":
+                from src.encoders.arctic_encoder import ArcticEmbedEncoder
+                processor = DataProcessor(config, ArcticEmbedEncoder)
+            elif config.encoder_type == "qwen2":
+                from src.encoders.gte_qwen2_instruct_encoder import Qwen2EmbedEncoder
+                processor = DataProcessor(config, Qwen2EmbedEncoder)
+            else:
+                raise ValueError(f"Unknown encoder type: {config.encoder_type}")
+
+            processor.generate_embeddings_from_files(args.input_files, args.output_dir)
+            torch.cuda.synchronize(local_rank)
+            dist.barrier()
+        finally:
             dist.destroy_process_group()
-        except Exception as e:
-            logger.error("Error destroying process group: " + str(e))
+            del processor
+            gc.collect()
+            torch.cuda.empty_cache()
+    
+    elif args.command == "subset":
+        # Phase 2: Subset Selection with Gloo
+        dist.init_process_group(
+            backend="gloo",
+            init_method="env://",
+            timeout=datetime.timedelta(seconds=36000)
+        )
+        try:
+            # Check that embeddings exist.
+            if config.combine_files:
+                dataset_name = "combined_dataset"
+                emb_dir = os.path.join(args.output_dir, dataset_name, "embeddings")
+                emb_file = os.path.join(emb_dir, "embeddings.h5")
+                if not os.path.exists(emb_file):
+                    logger.error(f"Embeddings file {emb_file} not found. Please generate embeddings before subset selection.")
+                    return
+            else:
+                for infile in args.input_files:
+                    dataset_name = os.path.splitext(os.path.basename(infile))[0]
+                    emb_dir = os.path.join(args.output_dir, dataset_name, "embeddings")
+                    emb_file = os.path.join(emb_dir, "embeddings.h5")
+                    if not os.path.exists(emb_file):
+                        logger.error(f"Embeddings file {emb_file} not found for dataset {dataset_name}. Please generate embeddings before subset selection.")
+                        return
+            
+            # Dummy encoder for subset selection phase.
+            class DummyEncoder:
+                def __init__(self, model_name, max_length, use_fp16, device):
+                    self.model = torch.nn.Linear(1, 1)
+                def encode(self, texts, instruction):
+                    raise NotImplementedError("Dummy encoder not used for encoding")
+            
+            processor = DataProcessor(config, DummyEncoder)
+            processor.select_subsets_from_files(args.input_files, args.output_dir)
+            torch.cuda.synchronize(local_rank)
+            dist.barrier()
+        finally:
+            dist.destroy_process_group()
 
 
 if __name__ == "__main__":
