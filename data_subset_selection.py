@@ -60,6 +60,7 @@ class ProcessingConfig:
                                  # otherwise select a subset from each file separately.
     encoder_type: str = 'bge'  # Encoder Family
     encoder_model: str = 'BAAI/bge-m3'  # Encoder Model
+    epsilon: float = 0.01
 
 
 def retry_on_exception(func):
@@ -364,7 +365,8 @@ class DataProcessor:
                 gpu_folds_info,
                 embeddings,
                 self.config.subset_sizes,
-                len(embeddings)
+                len(embeddings),
+                self.config.epsilon
             ))
             start_fold = end_fold
 
@@ -384,7 +386,7 @@ class DataProcessor:
 
         base_name = dataset_name
         subsets = {}
-        
+
         for size_spec in self.config.subset_sizes:
             actual_size = self.calculate_subset_size(len(embeddings), size_spec)
             sorted_indices_gains = sorted(
@@ -508,7 +510,7 @@ def process_folds_with_gpu(args):
     """
     Process folds on GPU with support for both percentage and absolute size specifications.
     """
-    gpu_id, gpu_folds_info, embeddings, subset_sizes, total_samples = args
+    gpu_id, gpu_folds_info, embeddings, subset_sizes, total_samples, epsilon = args
     try:
         torch.cuda.set_device(gpu_id)
         device = f"cuda:{gpu_id}"
@@ -534,7 +536,7 @@ def process_folds_with_gpu(args):
                     n=similarity_matrix.shape[0],
                     sijs=similarity_matrix,
                     mode="dense",
-                    separate_rep=False
+                    separate_rep=False,
                 )
                 
                 for size_spec in subset_sizes:
@@ -548,10 +550,11 @@ def process_folds_with_gpu(args):
                     subset_result = ds_func.maximize(
                         budget=budget,
                         optimizer="LazierThanLazyGreedy",
-                        epsilon=160,
+                        epsilon=epsilon,
                         stopIfZeroGain=False,
                         stopIfNegativeGain=False,
-                        verbose=False
+                        verbose=False,
+                        show_progress=False
                     )
                     
                     subset_indices = [fold_indices[x[0]] for x in subset_result]
