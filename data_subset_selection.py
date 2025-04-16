@@ -60,7 +60,7 @@ class ProcessingConfig:
                                  # otherwise select a subset from each file separately.
     encoder_type: str = 'bge'  # Encoder Family
     encoder_model: str = 'BAAI/bge-m3'  # Encoder Model
-    epsilon: float = 0.01
+    epsilon: float = 160
 
 
 def retry_on_exception(func):
