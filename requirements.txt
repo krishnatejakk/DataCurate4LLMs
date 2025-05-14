@@ -7,7 +7,7 @@ transformers
 evaluate
 peft
 accelerate
-git+https://github.com/decile-team/submodlib.git
+submodlib-py==0.0.3
 tqdm
 jinja2
 faiss-gpu
