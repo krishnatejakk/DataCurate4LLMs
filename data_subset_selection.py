@@ -101,7 +101,6 @@ class DataProcessor:
         self.encoder = encoder_cls(model_name=config.encoder_model)
         self.env = Environment(loader=BaseLoader())
         self.templates = {k: self.env.from_string(v) for k, v in config.templates.items()}
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
         # Set random seeds
         np.random.seed(config.seed)
@@ -512,8 +511,14 @@ def process_folds_with_gpu(args):
     """
     gpu_id, gpu_folds_info, embeddings, subset_sizes, total_samples, epsilon = args
     try:
-        torch.cuda.set_device(gpu_id)
-        device = f"cuda:{gpu_id}"
+        if torch.cuda.is_available():
+            device = f"cuda:{gpu_id}"
+            torch.cuda.set_device(gpu_id)
+        elif torch.mps.is_available():
+            device = "mps:0"
+        else:
+            device="cpu"
+
         results = []
         for fold_idx, fold_indices in gpu_folds_info:
             try:
@@ -621,7 +626,7 @@ def main():
 
         config = ProcessingConfig(**config_dict)
         
-        config.num_gpus = min(args.num_gpus, torch.cuda.device_count())
+        config.num_gpus = min(args.num_gpus, max(torch.cuda.device_count(), torch.mps.device_count()))
         config.max_retries = args.max_retries
         config.retry_delay = args.retry_delay
         config.output_dir = args.output_dir
