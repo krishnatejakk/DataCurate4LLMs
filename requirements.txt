@@ -10,7 +10,7 @@ accelerate
 submodlib-py==0.0.3
 tqdm
 jinja2
-faiss-gpu
+faiss-gpu-cu12
 langchain[openai]
 python-dotenv
 tenacity
